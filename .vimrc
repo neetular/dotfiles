@@ -27,47 +27,19 @@ endif
 let mapleader='\'
 let maplocalleader=','
 
-" Use ',' instead of '\'.
-" It is not mapped with respect well unless I set it before setting for plug in.
-" Use <Leader> in global plugin.
-"pending let g:mapleader = ','
-"pending " Use <LocalLeader> in filetype plugin.
-"pending let g:maplocalleader = 'm'
-"pending 
-"pending " Release keymappings for plug-in.
-"pending nnoremap ;  <Nop>
-"pending xnoremap ;  <Nop>
-"pending nnoremap m  <Nop>
-"pending xnoremap m  <Nop>
-"pending nnoremap ,  <Nop>
-"pending xnoremap ,  <Nop>
-
 " Too lazy to press Shift key.
 noremap ;  :
 "noremap :  ;
-"nunmap :
-"nnoremap : <Nop>
-"xnoremap : <Nop>
-
-"nmap  :   [Colon]
-"xmap  :   [Colon]
-"nnoremap  [Colon]   <Nop>
-"xnoremap  [Colon]   <Nop>
 
 if s:is_windows
   " Exchange path separator.
   set shellslash
 endif
 
-
 " Anywhere SID.
 function! s:SID_PREFIX()
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
-
-"del function! s:SID_PREFIX()
-"del  return matchstr(expand('<sfile>'), '<SNR>\d\+_')
-"del endfunction
 
 " Use this group for any autocmd defined in this file.
 augroup MyAutoCmd
@@ -102,13 +74,6 @@ if has('vim_starting')
   call neobundle#rc(expand('~/.vimbundles'))
 endif
 
-"if has('vim_starting')
-"  set runtimepath+=~/.vim/bundle/neobundle.vim
-"  "set runtimepath+=~/vimfiles/neobundle.vim
-"
-"  call neobundle#rc(expand('~/.vim/bundle'))
-"endif
-
 
 " neobundle.vim"{{{
 "
@@ -123,29 +88,13 @@ endif
 
 NeoBundleFetch 'Shougo/neobundle.vim', '', 'default'
 
-"NeoBundle 'git://github.com/Shougo/clang_complete.git'
-"NeoBundle 'git://github.com/Shougo/echodoc.git'
 NeoBundle 'git://github.com/Shougo/neocomplcache.git'
-"NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
 
-
-"NeoBundle 'git://github.com/Shougo/unite.vim.git'
-"pending NeoBundle 'Shougo/unite.vim',
-"pending call neobundle#config('unite.vim',{
-"pending       \ 'lazy' : 1,
-"pending       \ 'autoload' : {
-"pending       \   'commands' : [{ 'name' : 'Unite',
-"pending       \                   'complete' : 'customlist,unite#complete_source'},
-"pending       \                 'UniteWithCursorWord', 'UniteWithInput']
-"pending       \ }})
 NeoBundle 'Shougo/unite.vim'
 
-"NeoBundle 'git://github.com/Shougo/vim-vcs.git'
 NeoBundle 'git://github.com/Shougo/vimfiler.git'
 NeoBundle 'git://github.com/Shougo/vimshell.git'
 
-"NeoBundle 'Shougo/vimproc'
-"NeoBundle http://github.com/Shougo/vimproc
 NeoBundle 'Shougo/vimproc', '', 'default'
 call neobundle#config('vimproc', {
       \ 'build' : {
@@ -157,12 +106,10 @@ call neobundle#config('vimproc', {
       \ })
 
 NeoBundle 'Shougo/unite-ssh'
-"NeoBundle 'git://github.com/Shougo/unite-ssh'
 
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'tsukkee/unite-tag'
 
-"NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'Shougo/unite-outline', '', 'default'
 call neobundle#config('unite-outline', {
       \ 'lazy' : 1,
@@ -193,24 +140,13 @@ call neobundle#config('junkfile.vim', {
       \ }})
 
 NeoBundle 'tyru/vim-altercmd'
-"NeoBundleLazy 'tyru/vim-altercmd'
-"NeoBundle 'tyru/vim-altercmd', { 'autoload' : {
-"      \ 'mappings' : ':'
-"      \ }}
 
 NeoBundleLazy 'yuratomo/w3m.vim', { 'autoload' : {
       \ 'commands' : 'W3m',
       \ }}
 
-NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'altercation/solarized'
-NeoBundle 'vim-scripts/newspaper.vim'
 NeoBundle 'vim-jp/vimdoc-ja.git'
-"NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'kana/vim-tabpagecd'
-"NeoBundle 'osyo-manga/vim-reanimate.git'
 
 NeoBundle 'yuratomo/dotnet-complete.git'
 NeoBundle 'tpope/vim-fugitive'
@@ -232,14 +168,16 @@ NeoBundle 'hrsh7th/vim-versions.git'
 NeoBundle 'rhysd/clever-f.vim.git'
 
 " colorscheme
-"NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'altercation/solarized'
+NeoBundle 'vim-scripts/newspaper.vim'
+NeoBundle 'nanotech/jellybeans.vim'
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'vim-scripts/twilight'
 NeoBundle 'jonathanfilip/vim-lucius'
 NeoBundle 'jpo/vim-railscasts-theme'
-"NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'vim-scripts/Wombat'
-"NeoBundle 'tomasr/molokai'
+NeoBundle 'tomasr/molokai'
 NeoBundle 'vim-scripts/rdark'
 
 NeoBundle 'Shougo/neosnippet'
@@ -252,22 +190,12 @@ NeoBundle 'Shougo/vim-vcs', {
       \ 'autoload' : {'commands' : 'Vcs'},
       \   }
 
-"NeoBundle 'Kocha/vim-unite-tig'
 
-"NeoBundleLazy 'yomi322/vim-gitcomplete', { 'autoload' : {
 NeoBundle 'yomi322/vim-gitcomplete', { 'autoload' : {
       \ 'filetype' : 'vimshell'
       \ }}
 
-"NeoBundle 'rking/ag.vim'
-
 NeoBundle 'Shougo/unite-build', '', 'default'
-
-"NeoBundleLazy 'tyru/restart.vim', {
-"      \ 'gui' : 1,
-"      \ 'autoload' : {
-"      \  'commands' : ['Restart', 'RestartWithSession']
-"      \ }}
 
 NeoBundle 'trapd00r/neverland-vim-theme.git'
 NeoBundle 'veloce/vim-aldmeris', {'directory': 'aldmeris'}
@@ -296,8 +224,6 @@ NeoBundleLazy 'Shougo/unite-help', { 'autoload' : {
       \ 'unite_sources' : 'help'
       \ }}
 
-"NeoBundle 'Shougo/unite-session'
-
 NeoBundle 'Shougo/vinarise', '', 'default'
 call neobundle#config('vinarise', {
       \ 'lazy' : 1,
@@ -306,9 +232,7 @@ call neobundle#config('vinarise', {
       \ }})
 
 NeoBundle 'davidoc/taskpaper.vim'
-"NeoBundle 'hsitz/VimOrganizer'
 
-"NeoBundle 'VOom'
 NeoBundle 'vim-scripts/VOoM'
 
 NeoBundle 't9md/vim-textmanip' " easy text manupilation for vim
@@ -567,9 +491,7 @@ set splitbelow
 set splitright
 " Set minimal width for current window.
 set winwidth=10
-"set winwidth=30
 " Set minimal height for current window.
-" set winheight=20
 set winheight=1
 " Set maximam maximam command line window.
 set cmdwinheight=5
@@ -591,10 +513,8 @@ set showcmd " コマンドをステータス行に表示
 
 " 補完関連
 set completeopt=menuone
-"set complete=.
 set complete=.,w,b,t
 set pumheight=20
-"set pumheight=32
 set showfulltag
 
 " GUI固有ではない画面表示の設定:
@@ -609,7 +529,6 @@ set nowrap
 set laststatus=2
 " コマンドラインの高さ (Windows用gvim使用時はgvimrcを編集すること)
 set cmdheight=2
-"set cmdheight=2
 " タイトルを表示
 set title
 
@@ -784,15 +703,10 @@ function! bundle.hooks.on_source(bundle)
   let g:neocomplcache_dictionary_filetype_lists = {
         \ 'default' : '',
         \ }
-        "\ 'scheme' : expand('~/.gosh_completions'),
-        "\ 'scala' : expand('$DOTVIM/dict/scala.dict'),
-        "\ 'ruby' : expand('$DOTVIM/dict/ruby.dict'),
-        "\ 'int-termtter' : expand('~/.vimshell/int-history/int-termtter'),
 
   let g:neocomplcache_omni_functions = {
         \ 'cs' : 'cs#complete',
         \ }
-"        \ 'ruby' : 'rubycomplete#Complete',
 
   " Define keyword pattern.
   if !exists('g:neocomplcache_keyword_patterns')
@@ -886,12 +800,6 @@ function! bundle.hooks.on_source(bundle)
   imap <C-s>  <Plug>(neosnippet_start_unite_snippet)
   "imap <C-s>  <Plug>(neocomplcache_start_unite_snippet)
 
-"pending  " <CR>: close popup and save indent.
-"pending  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-"pending  function! s:my_cr_function()
-"pending    return neocomplcache#smart_close_popup() . "\<CR>"
-"pending  endfunction
-
   " <TAB>: completion.
   " 2013/06/18 neosnippet 優先のため調整
 "  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
@@ -949,27 +857,19 @@ nnoremap    [unite]   <Nop>
 xnoremap    [unite]   <Nop>
 nmap    U [unite]
 xmap    U [unite]
-"nmap    f [unite]
-"xmap    f [unite]
 
 nnoremap <silent> [unite]f  :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir -buffer-name=files buffer file_mru bookmark file<CR>
 
 nnoremap <silent> [unite]b  :<C-u>Unite -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
-"nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
 
-"nnoremap <silent> [unite]r  :<C-u>Unite -buffer-name=register register<CR>
 nnoremap <silent> [unite]r  :<C-u>UniteResume<CR>
 nnoremap <silent> [unite]R  :<C-u>Unite resume<CR>
 nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
 
-"nnoremap <silent> [unite]d  :<C-u>Unite -buffer-name=files -default-action=vimfiler directory_mru<CR>
 nnoremap <silent> [unite]d  :<C-u>Unite -buffer-name=files -default-action=lcd directory_mru<CR>
 
-"nnoremap <silent> [unite]g  :<C-u>Unite grep -buffer-name=search<CR>
 nnoremap <silent> [unite]t  :<C-u>Unite tag  -buffer-name=tag<CR>
-"nnoremap <silent> [unite]f  :<C-u>Unite tag/file -buffer-name=files<CR>
-"nnoremap <silent> [unite]l  :<C-u>Unite line -buffer-name=line<CR>
 nnoremap <silent> [unite]q  :<C-u>Unite qf   -buffer-name=QuickFix<CR>
 
 nnoremap <silent> [unite]k  :<C-u>Unite -buffer-name=files bookmark buffer file_mru file<CR>
@@ -980,11 +880,8 @@ nnoremap <silent> [unite]m  :<C-u>Unite menu<CR>
 
 nnoremap [unite]s  :<C-u>Unite source<CR>
 nnoremap [unite]S  :<C-u>Unite source -start-insert<CR>
-"nnoremap [unite]U  :<C-u>Unite source -start-insert<CR>
-"nnoremap [unite]f  :<C-u>Unite source<CR>
 
 nnoremap [unite]u  q:Unite<Space>
-"nnoremap [unite]U  q:Unite<Space>
 
 nnoremap <silent> [unite]g
       \ :<C-u>Unite grep -buffer-name=search -auto-preview -no-quit -resume<CR>
@@ -994,33 +891,11 @@ nnoremap <silent> [Window]G
 nnoremap <expr><silent> [unite]l
   \ ":\<C-u>Unite -buffer-name=line -input=" . @/ . " -no-start-insert line\<CR>"
 
-"nnoremap <expr><silent> N
-"      \ ":\<C-u>Unite -buffer-name=search -input=" . @/ . " -no-start-insert line\<CR>"
-"nnoremap <silent> n   :UniteResume search<CR>
-
-" 無視パターン
-"del let g:unite_source_file_mru_ignore_pattern = '\~$\|\.\%(o|exe|dll|bak|sw[po]\)$\|\%(^\|/\)\.\%(hg\|git\|bzr\|svn\)\%($\|/\)\|^\%(\\\\\|/mnt/\|/media/\)'
-"del let g:unite_source_directory_mru_ignore_pattern = '\~$\|\.\%(o|exe|dll|bak|sw[po]\)$\|\%(^\|/\)\.\%(hg\|git\|bzr\|svn\)\%($\|/\)\|^\%(\\\\\|/mnt/\|/media/\)'
 
 " <C-t>: Tab pages
-"nnoremap <silent> <C-t>       :<C-u>Unite tab<CR>
 nnoremap <silent> <C-t>       :<C-u>Unite tab menu:tweetvim -start-insert<CR>
 nmap <silent> T <C-t>
-"nnoremap <silent> T       :<C-u>Unite tab -start-insert<CR>
 
-"pending if s:is_windows
-"pending   nnoremap <silent> [Window]s
-"pending         \ :<C-u>Unite -buffer-name=files -no-split -multi-line
-"pending         \ jump_point file_point buffer_tab
-"pending         \ file_rec:! file file/new file_mru<CR>
-"pending else
-"pending   nnoremap <silent> [Window]s
-"pending         \ :<C-u>Unite -buffer-name=files -no-split -multi-line
-"pending         \ jump_point file_point buffer_tab
-"pending         \ file_rec/async:! file file/new file_mru<CR>
-"pending endif
-"pending nnoremap <silent> [Window]w
-"pending       \ :<C-u>Unite window<CR>
 nnoremap <silent> [Space]b
       \ :<C-u>UniteBookmarkAdd<CR>
 
@@ -1029,29 +904,13 @@ nnoremap <silent> Kl
       \ :<C-u>Unite -buffer-name=search -no-split -start-insert line<CR>
 nnoremap <expr><silent> KL
       \ ":\<C-u>Unite -buffer-name=search -input=" . @/ . " -auto-highlight -no-start-insert line\<CR>"
-"nnoremap <silent> KL
-"      \ :<C-u>Unite -buffer-name=search -auto-highlight -start-insert line<CR>
 
-"pending nnoremap <silent> /
-"pending       \ :<C-u>Unite -buffer-name=search -no-split -start-insert line<CR>
-"pending nnoremap <expr> g/  <SID>smart_search_expr('g/',
-"pending      \ ":\<C-u>Unite -buffer-name=search -auto-preview -start-insert line_migemo\<CR>")
-"pending nnoremap [Alt]/  g/
-"pending nnoremap <silent> ?
-"pending       \ :<C-u>Unite -buffer-name=search -auto-highlight -start-insert line:backward<CR>
-"pending nnoremap <silent> *
-"pending       \ :<C-u>UniteWithCursorWord -no-split -buffer-name=search line<CR>
-"pending nnoremap [Alt]/       /
-"pending nnoremap [Alt]?       ?
 cnoremap <expr><silent><C-g>        (getcmdtype() == '/') ?
       \ "\<ESC>:Unite -buffer-name=search -no-split line -input=".getcmdline()."\<CR>" : "\<C-g>"
 
 function! s:smart_search_expr(expr1, expr2)
   return line('$') > 5000 ?  a:expr1 : a:expr2
 endfunction
-
-"pending nnoremap <silent> n
-"pending       \ :<C-u>UniteResume search -no-start-insert<CR>
 
 let g:unite_source_history_yank_enable = 1
 
@@ -1162,14 +1021,6 @@ function! bundle.hooks.on_source(bundle)
     			\     'q' : 10, 'w' : 11, 'e' : 12, 'r' : 13, 't' : 14, 'y' : 15, 'u' : 16, 'i' : 17, 'o' : 18, 'p' : 19,
     			\     '1' : 20, '2' : 21, '3' : 22, '4' : 23, '5' : 24, '6' : 25, '7' : 26, '8' : 27, '9' : 28, '0' : 29,
     			\ })
-"	let g:unite_quick_match_table = {
-"				\ 'a' : 1, 's' : 2, 'd' : 3, 'f' : 4, 'g' : 5,
-"				\ 'h' : 6, 'k' : 7, 'l' : 8, ';' : 9,
-"				\ 'q' : 10, 'w' : 11, 'e' : 12, 'r' : 13, 't' : 14,
-"				\ 'y' : 15, 'u' : 16, 'i' : 17, 'o' : 18, 'p' : 19,
-"				\ '1' : 20, '2' : 21, '3' : 22, '4' : 23, '5' : 24,
-"				\ '6' : 25, '7' : 26, '8' : 27, '9' : 28, '0' : 29,
-"				\}
 
     " Custom actions."{{{
     let my_tabopen = {
@@ -1208,8 +1059,6 @@ function! bundle.hooks.on_source(bundle)
 	inoremap <silent> <buffer> <expr> <C-s> unite#do_action('vimshell')
 	nnoremap <silent> <buffer> <expr> <C-s> unite#do_action('vimshell')
 
-	"pending      nmap <silent><buffer> <Tab>     :call <SID>NextWindow()<CR>
-
 	nmap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
 	imap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
 	imap <buffer> <C-y>     <Plug>(unite_narrowing_path)
@@ -1218,8 +1067,6 @@ function! bundle.hooks.on_source(bundle)
 	nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
 	nnoremap <buffer><expr> S      unite#mappings#set_current_filters(
 				\ empty(unite#mappings#get_current_filters()) ? ['sorter_reverse'] : [])
-	" Start insert.
-	"let g:unite_enable_start_insert = 1
   endfunction "}}}
 
   " Variables.
@@ -1227,14 +1074,12 @@ function! bundle.hooks.on_source(bundle)
   let g:unite_winheight = 20
   let g:unite_enable_start_insert = 0
   let g:unite_enable_short_source_names = 0
-  "let g:unite_enable_short_source_names = 1
   
   let g:unite_source_file_mru_limit = 300
   let g:unite_source_directory_mru_limit = 300
   let g:unite_cursor_line_highlight = 'TabLineSel'
   
   " For optimize.
-  "let g:unite_source_file_mru_filename_format = ''
   let g:unite_source_file_mru_time_format= 		'(%m/%d %H:%M) '
   let g:unite_source_directory_mru_time_format = 	'(%m/%d %H:%M) '
   
@@ -1278,11 +1123,6 @@ unlet bundle
 "
 let bundle = neobundle#get('vimshell')
 function! bundle.hooks.on_source(bundle)
-  "let g:vimshell_user_prompt = 'getcwd()'
-  "let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~") ' . 'vcs#info("(%s)-[%b]%p", "(%s)-[%b|%a]%p")'
-  "let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-  "let g:vimshell_right_prompt = 'vcs#info("(%s)-[ %b ]%p", "(%s)-[ %b | %a ]%p")'
-
   let g:vimshell_user_prompt = s:SID_PREFIX() . 'vimshell_make_user_prompt()'
   function! s:vimshell_make_user_prompt()
     " 出力行数等
@@ -1292,7 +1132,6 @@ function! bundle.hooks.on_source(bundle)
 
     " カレントディレクトリ
     return fnamemodify(getcwd(), ":~") . ' ' . vcs#info("(%s)-[ %b ] %p", "(%s)-[ %b | %a ] %p")
-    "return fnamemodify(getcwd(), ":~") . ' ' . vcs#info("(%s)-[%b]%p", "(%s)-[%b|%a]%p")
   endfunction
 
   "let g:vimshell_right_prompt = 'fugitive#statusline()'
@@ -1313,21 +1152,6 @@ function! bundle.hooks.on_source(bundle)
   " 正確にするのは大変そう
   let g:vimshell_prompt_expr = '"{" . strftime("%H:%M:%S") . "} L+" . max([0, (line("$") - max(keys(b:vimshell.prompt_current_dir)) - 1)]) . " > "'
   let g:vimshell_prompt_pattern = '{\%(\d\|:\)\+} L+\%(\d\)\+ > '
-  " let g:vimshell_prompt_expr = '"L+" . max([0, (line("$") - max(keys(b:vimshell.prompt_current_dir)) - 1)]) . " > "'
-  " let g:vimshell_prompt_pattern = '^L+\%(\d\)\+ > '
-
-  "let g:vimshell_editor_command = v:progname . ' --servername=VIM2 --remote-tab-wait-silent'
-  "  if has('gui_macvim')
-  "      " MacVim check.
-  "      if executable('/Applications/MacVim.app/Contents/MacOS/Vim')
-  "    	  let progname = '/Applications/MacVim.app/Contents/MacOS/Vim -g'
-  "    	  "let g:vimshell_editor_command = progname . ' --servername=VIM2 --remote-tab-wait-silent'
-  "    	  "let g:vimshell_editor_command = progname . ' --servername VIM2 --remote-tab-wait-silent'
-  "    	  "let g:vimshell_editor_command = progname
-  "    	  "let g:vimshell_editor_command = progname . ' --cmd "let g:singleton#disable=1" --servername VIM --remote-tab-wait-silent'
-  "    	  let g:vimshell_editor_command = 'open -a /Applications/MacVim.app'
-  "      endif
-  "  endif
 
   autocmd MyAutoCmd FileType vimshell call s:vimshell_settings()
   function! s:vimshell_settings()
@@ -1337,30 +1161,18 @@ function! bundle.hooks.on_source(bundle)
 
     " Use zsh history.
 	let g:unite_source_vimshell_external_history_path = expand('~/.zsh_history')
-    "let g:vimshell_external_history_path = expand('~/.zsh-history')
 
 	" altercmd
 	call vimshell#altercmd#define('u', 'cdup')
     call vimshell#altercmd#define('g', 'git')
     call vimshell#altercmd#define('i', 'iexe')
     call vimshell#altercmd#define('q', 'exit')
-    "call vimshell#altercmd#define('t', 'texe')
 
 	" alias
     call vimshell#set_alias('ll', 'ls -l')
     call vimshell#set_alias('la', 'ls -a')
     call vimshell#set_alias('t', 'vim --split=tabedit $$args')
 	call vimshell#set_alias('up', 'cdup')
-    "call vimshell#set_alias('t', ':VimShellTab')
-    "call vimshell#set_alias('l.', 'ls -d .*')
-    "call vimshell#set_alias('gvim', 'gexe gvim')
-    "call vimshell#set_alias('edit', 'vim --split=tabedit $$args')
-    "call vimshell#set_alias('e', 'edit')
-	
-    "call vimshell#set_alias('e', 'vim --split=""')
-    "call vimshell#set_alias('edit', 'vim --split=""')
-    "call vimshell#set_alias('e', 'edit')
-    "call vimshell#set_alias('tw', ':TweetVimHomeTimeline')
 
 	" galias
 	call vimshell#set_galias('L', '| less')
@@ -1372,9 +1184,6 @@ function! bundle.hooks.on_source(bundle)
 	call vimshell#set_galias('...', '../..')
 	call vimshell#set_galias('....', '../../..')
 	call vimshell#set_galias('.....', '../../../..')
-    "call vimshell#set_galias('L', 'ls -l')
-    "call vimshell#set_galias('time', 'exe time -p')
-
 
     inoremap <buffer><expr>' pumvisible() ? "\<C-y>" : "'"
     imap <buffer><BS> <Plug>(vimshell_another_delete_backward_char)
@@ -1417,7 +1226,6 @@ unlet bundle
 nnoremap <silent>   [Space]v   :<C-u>VimFiler -find<CR>
 nnoremap <silent>   [Space]f   :<C-u>VimFiler -find<CR>
 nnoremap            [Space]F  :<C-u>VimFiler -buffer-name=explorer -split -simple -winwidth=35 -toggle<CR>
-"nnoremap    [Space]ff   :<C-u>VimFiler -buffer-name=explorer -split -simple -winwidth=35 -toggle<CR>
 
 call vimfiler#set_execute_file('vim', 'vim')
 call vimfiler#set_execute_file('txt', 'vim')
@@ -1436,7 +1244,6 @@ let g:vimfiler_marked_file_icon = '*'
 
 " This variable controls default vimfiler sort type.
 let g:vimfiler_sort_type = 'Time'
-"let g:vimfiler_enable_auto_cd = 1
 
 " Use trashbox.
 " Windows only and require latest vimproc.
@@ -1510,43 +1317,11 @@ endfunction
 unlet bundle
 "}}}
 
-" ctrlp.vim{{{
-  "nnoremap <silent> <S-CR>  :<C-u>CtrlP<Return>
-  ""nnoremap <silent> KK  :<C-u>CtrlPMRUFiles<Return>
-  ""nnoremap <silent> <C-m>  :<C-u>CtrlPMRUFiles<Return>
-  ""nnoremap <silent> <C-l>  :<C-u>CtrlP<Return>
-  ""let g:ctrlp_map = '<c-l>'
-  "let g:ctrlp_use_migemo = 1
-  "let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
-  "let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
-  "let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
-  "let g:ctrlp_working_path_mode = 'ra'
-  "let g:ctrlp_by_filename = 1 " ファイル名部分で検索 <c-d> でフルパスモードとトグル
-
-
-
-"}}}
 
 " tabpagecd{{{
 autocmd MyAutoCmd TabEnter * NeoBundleSource vim-tabpagecd
 "}}}
 
-" reanimate{{{
-
-" 2013/05/15 Saveで書き込めずうまく使えてない
-
-" 保存先のディレクトリ
-" let g:reanimate_save_dir = "~/reanimate"
-"let g:reanimate_save_dir = "~/.vim/reanimate"
-
-" :ReanimateSave<CR>
-" のように引数がない場合に使用される名前です
-" let g:reanimate_default_save_name = "latest"
-
-" sessionoptions
-"let g:reanimate_sessionoptions="curdir,folds,help,localoptions,slash,tabpages,winsize"
-
-"}}}
 
 " fugitive{{{
 nnoremap [Space]gg :<C-u>Git<Space>
@@ -1566,20 +1341,13 @@ augroup END
 nnoremap [Space]gv :<C-u>Gitv --all<cr>
 nnoremap [Space]gV :<C-u>Gitv! --all<cr>
 vnoremap [Space]gV :<C-u>Gitv! --all<cr>
-"cabbrev git Git
-"highlight diffAdded guifg=#00bf00
-"highlight diffRemoved guifg=#bf0000
-"let g:Gitv_WrapLines = 1
 let g:Gitv_TruncateCommitSubjects = 1
 
 autocmd MyAutoCmd FileType gitv call s:my_gitv_settings()
 function! s:my_gitv_settings()
-  "nmap  <buffer>  S [Window]
-  "nunmap <buffer> S "FileTypeのタイミングではうまくいかない
 
   setlocal iskeyword+=/,-,.
   nnoremap <buffer> C :<C-u>Git checkout <C-r><C-w><Space>
-  "nnoremap <silent><buffer> C :<C-u>Git checkout <C-r><C-w><CR>
 
   " この要領でやりたいこと追加可能
   " nnoremap <buffer> <Space>rb :<C-u>Git rebase <C-r>=<SID>gitv_get_current_hash()<CR><Space>
@@ -1598,8 +1366,6 @@ endfunction
 
 autocmd MyAutoCmd FileType git call s:my_git_settings()
 function! s:my_git_settings()
-"  nmap  <buffer>  S [Window]
-  "nunmap <buffer> S "FileTypeのタイミングではうまくいかない
   setlocal nofoldenable foldlevel=0
 endfunction
 
@@ -1611,9 +1377,7 @@ endfunction
 
 autocmd MyAutoCmd FileType gitcommit call s:my_gitcommit_settings()
 function! s:my_gitcommit_settings()
-  "nunmap <buffer> S "FileTypeのタイミングではうまくいかない
   highlight link gitcommitSelectedFile diffAdded
-  "highlight gitcommitSelectedFile guifg=#00bf00
 endfunction
 
 "}}}
@@ -1622,8 +1386,6 @@ endfunction
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nmap gw <Plug>(openbrowser-smart-search)
 vmap gw <Plug>(openbrowser-smart-search)
-"nmap gx <Plug>(openbrowser-smart-search)
-"vmap gx <Plug>(openbrowser-smart-search)
 "}}}
 
 " evervim "{{{
@@ -1677,9 +1439,6 @@ endif
 
 " Enable snipMate compatibility feature.
 let g:neosnippet#enable_snipmate_compatibility = 1
-
-" let g:snippets_dir = '~/.vim/snippets/,~/.vim/bundle/snipmate/snippets/'
-"let g:neosnippet#snippets_directory = '~/.vim/snippets/,~/.vim/bundle/vim-snippets/snippets/'
 let g:neosnippet#snippets_directory = '~/.vim/snippets/,~/.vimbundles/vim-snippets/snippets/'
 
 "}}}
@@ -1757,8 +1516,6 @@ function! s:taskpaper_setup() "{{{
   nmap <buffer> <silent> <Leader>t<Space>  tNtdj
   nmap <buffer> <silent> <Leader>ta        tD
 
-  "inoremap <buffer> <Tab>   <Space><BS><Esc>>>A
-  "inoremap <buffer> <S-Tab> <Space><BS><Esc><<A
   inoremap <buffer><expr><TAB>    pumvisible() ? "\<C-n>" : "\<Space>\<BS>\<Esc>>>A"
   inoremap <buffer><expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<Space>\<BS>\<Esc><<A"
 
@@ -1884,27 +1641,16 @@ nnoremap <silent> KK  :<C-u>UniteWithCurrentDir -buffer-name=files args file_mru
 nnoremap <silent> Kk  :<C-u>Unite               -buffer-name=files args file_mru buffer file<CR>
 
 nnoremap <silent> KR  :<C-u>Unite -buffer-name=files file_rec/async buffer file<CR>
-"nnoremap <silent> KK  :<C-u>Unite -buffer-name=files buffer file_mru file<CR>
-"nnoremap <silent> KK  :<C-u>CtrlPMRUFiles<Return>
-"nmap <silent> KP  KK<c-p>
 nnoremap <silent> KF  :<C-u>Unite -buffer-name=files file<CR>
-"nnoremap <silent> KF  :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 
 nnoremap <silent> KO  :<C-u>Unite outline -start-insert -resume<CR>
-"nnoremap <silent> KO  :<C-u>Unite outline<CR>
 
-"nnoremap <silent> KJ  :<C-u>Unite -buffer-name=files -default-action=cd directory_mru<CR>
 nnoremap <silent> KJ  :<C-u>Unite -buffer-name=files -default-action=lcd directory_mru<CR>
-"nnoremap <silent> KH  :<C-u>VimShellPop<CR>
 nnoremap <silent> KM  :<C-u>Unite menu<CR>
 nnoremap KS  :<C-u>Unite source<CR>
 nnoremap KU  q:Unite<Space>
-"nnoremap <expr><silent> KL
-"  \ ":\<C-u>Unite -buffer-name=line -input=" . @/ . " -no-start-insert line\<CR>"
 
 nnoremap <silent> KB  :<C-u>Unite -buffer-name=files bookmark<CR>
-
-"nnoremap <silent> K>  :<C-u>Unite -buffer-name=files -start-insert file_rec/async<CR>
 
 xnoremap <silent> K"
       \ d:<C-u>Unite -buffer-name=register register history/yank<CR>
@@ -1919,20 +1665,7 @@ nnoremap <silent> KG
       \ :<C-u>Unite grep -buffer-name=search -auto-preview -no-quit<CR>
 
 nnoremap <silent> [Space]h  :<C-u>VimShellBufferDir<CR>
-"nnoremap <silent> [Space]h  :<C-u>VimShell<CR>
-"nnoremap <silent> [Space]h  :<C-u>VimShellPop<CR>
-
-"nmap :  <Plug>(vimshell_split_switch)
 nmap :  <Plug>(vimshell_switch)
-"nmap [Colon]  <Plug>(vimshell_switch)
-"nmap :  <Plug>(vimshell_switch)
-"nmap <silent> KH  <Plug>(vimshell_switch)
-"nnoremap <silent> K:  :<C-u>VimShellBufferDir<CR>
-"nnoremap <silent> KB  :<C-u>VimShellBufferDir<CR>
-"nnoremap <silent> KH  :<C-u>VimShellPop<CR>
-"nmap <CR> <Plug>(vimshell_switch)
-"nmap <C-@> <Plug>(vimshell_switch)
-"でいつでもvimshellを呼んでいるとはそこまでvimshellが重要だったのか
 
 nnoremap KW  :<C-u>TweetVimHomeTimeline<CR>
 
@@ -1941,7 +1674,6 @@ nnoremap KW  :<C-u>TweetVimHomeTimeline<CR>
 " neetular Tag jumping  " {{{
 
 nnoremap    [Tag]   <Nop>
-"nmap    <C-T> [Tag]
 nmap    t [Tag]
 
 " ``T'' is also disabled for consistency.
@@ -2001,9 +1733,9 @@ nnoremap          [Quickfix]g         :<C-u>grep<Space>
 " カーソル下の単語grep
 " (バイナリファイルを誤って対象にしてしまうのを防ぐため、
 " デフォルトで .h を対象とする)
-
 " grep
 "nnoremap ,,                  :<C-u>grep <C-r><C-w> **/*.h
+
 " ag
 nnoremap ,,                  :<C-u>grep \\b<C-r><C-w>\\b
 nnoremap ,.                  :<C-u>grep <C-r><C-w>
@@ -2073,9 +1805,6 @@ inoremap <Leader>dt  <C-r>=strftime('%H:%M')<Return>
 
 " neetular Misc.  " {{{
 
-"noremap j gj
-"noremap k gk
-
 " ウィンドウ間の移動
 nnoremap <C-j> <C-W>w
 nnoremap <C-k> <C-W>W
@@ -2085,9 +1814,6 @@ nnoremap <C-N> gt
 nnoremap <C-P> gT
 nnoremap <C-TAB> gt
 nnoremap <C-S-TAB> gT
-
-" 2010-06-30 変更 今編集しているファイルのあるディレクトリにlcd
-"nnoremap g.  :<C-u>lcd %:h<CR>
 
 " Like gv, but select the last changed text.
 nnoremap gm  `[v`]
@@ -2107,8 +1833,6 @@ nnoremap <C-h><C-t>  :<C-u>exe "vertical botright help " . getbufvar(bufnr('%'),
 
 " TODO: ヘルプバッファ存在してウィンドウ閉じてまた開いた時などのため改善
 autocmd MyAutoCmd FileType help vertical resize 80
-"nnoremap <C-h>  :<C-u>rightbelow help<Space>
-"nnoremap <C-h><C-h>  :<C-u>rightbelow help<Space><C-r><C-w><Return>
 
 " 候補補完の仕方をzshライクに
 cnoremap <C-p>  <Up>
@@ -2121,14 +1845,8 @@ cnoremap <Down>  <C-n>
 " Command-line mode keymappings:"{{{
 " <C-a>, A: move to head.
 cnoremap <C-a>          <Home>
-"pending " <C-b>: previous char.
-"pending cnoremap <C-b>          <Left>
-" <C-d>: delete char.
-"pending cnoremap <C-d>          <Del>
 " <C-e>, E: move to end.
 cnoremap <C-e>          <End>
-"pending " <C-f>: next char.
-"pending cnoremap <C-f>          <Right>
 " <C-n>: next history.
 cnoremap <C-n>          <Down>
 " <C-p>: previous history.
@@ -2145,18 +1863,11 @@ nnoremap <SID>(command-line-enter) q:
 xnoremap <SID>(command-line-enter) q:
 nnoremap <SID>(command-line-norange) q:<C-u>
 
-"nmap ::  <SID>(command-line-enter)
-"xmap ::  <SID>(command-line-enter)
 nmap ;;  <SID>(command-line-enter)
 xmap ;;  <SID>(command-line-enter)
 
-" test
-"cnoremap <buffer><expr> ; col('.') == 1 ?
-"	\ "\<C-f>" : ";"
-
 autocmd MyAutoCmd CmdwinEnter * call s:init_cmdwin()
 autocmd MyAutoCmd CmdwinLeave * call s:quit_cmdwin()
-"autocmd MyAutoCmd CmdwinLeave * let g:neocomplcache_enable_auto_select = 1
 
 function! s:init_cmdwin()
   "NeoBundleSource vim-altercmd
@@ -2181,7 +1892,6 @@ endfunction
 
 function! s:quit_cmdwin()
   let g:neocomplcache_enable_auto_select = 1
-  "nmap :  <Plug>(vimshell_switch)
 endfunction
 
 "}}}
@@ -2207,8 +1917,6 @@ nnoremap <silent> [Space]s.  :<C-u>source $MYVIMRC<Return>
 nnoremap <silent> [Space]ss  :<C-u>source %<Return>
 
 " tabstop 切り替え
-"nnoremap <silent> [Space]8   :setl tabstop=8<Return>
-"nnoremap <silent> [Space]4   :setl tabstop=4<Return>
 nnoremap <silent> [Space]2 :<C-u>setl tabstop=2 shiftwidth=2 softtabstop=2<CR>
 nnoremap <silent> [Space]4 :<C-u>setl tabstop=4 shiftwidth=4 softtabstop=4<CR>
 nnoremap <silent> [Space]8 :<C-u>setl tabstop=8 shiftwidth=8 softtabstop=8<CR>
@@ -2232,12 +1940,6 @@ nnoremap <silent> [Space]/
 " Toggle cursorline.
 nnoremap <silent> [Space]cl
       \ :<C-u>call ToggleOption('cursorline')<CR>
-"pending " Set autoread.
-"pending nnoremap [Space]ar
-"pending       \ :<C-u>setlocal autoread<CR>
-" Output encoding information.
-"nnoremap <silent> [Space]en
-"      \ :<C-u>setlocal encoding? termencoding? fenc? fencs?<CR>
 " Set spell check.
 nnoremap [Space]sp
       \ :<C-u>call ToggleOption('spell')<CR>
@@ -2260,12 +1962,8 @@ nnoremap <silent> [Space]rg
       \ echo "source $MYGVIMRC"<CR>
 "}}}
 
-" Useful save mappings.
-"pending nnoremap <silent> <Leader><Leader> :<C-u>update<CR>
 
 " Change current directory.
-" TODO: g. に変えたり save_dir がないのをなんとかしたり
-"nnoremap <silent> [Space]cd :<C-u>call <SID>cd_buffer_dir()<CR>
 nnoremap <silent> g.  :<C-u>call <SID>cd_buffer_dir()<CR>
 nnoremap <silent> [Space]cd :<C-u>call <SID>cd_buffer_dir()<CR>
 function! s:cd_buffer_dir() "{{{
@@ -2284,12 +1982,6 @@ endfunction"}}}
 " Delete windows ^M codes.
 nnoremap <silent> [Space]<C-m> mmHmt:<C-u>%s/\r$//ge<CR>'tzt'm
 
-"pending " Delete spaces before newline.
-"pending nnoremap <silent> [Space]ss mmHmt:<C-u>%s/<Space>$//ge<CR>`tzt`m
-
-"pending " Easily syntax change.
-"pending nnoremap <silent> [Space]ft :<C-u>Unite -start-insert filetype<CR>
-
 " Change tab width. "{{{
 nnoremap <silent> [Space]ot2 :<C-u>setl shiftwidth=2 softtabstop=2<CR>
 nnoremap <silent> [Space]ot4 :<C-u>setl shiftwidth=4 softtabstop=4<CR>
@@ -2302,12 +1994,9 @@ nnoremap <silent> [Space]ot8 :<C-u>setl shiftwidth=8 softtabstop=8<CR>
 " The prefix key.
 nnoremap    [Window]   <Nop>
 nmap    S [Window]
-"nmap    s [Window]
-"nnoremap <silent> [Window]s  :<C-u>call <SID>split_nicely()<CR>
 nnoremap <silent> [Window]S  :<C-u>call <SID>split_nicely()<CR>
 nnoremap <silent> [Window]p  :<C-u>split<CR>
 nnoremap <silent> [Window]P  :<C-u>split<CR>
-"nnoremap <silent> [Window]p  :<C-u>call <SID>split_nicely()<CR>
 nnoremap <silent> [Window]v  :<C-u>vsplit<CR>
 nnoremap <silent> [Window]V  :<C-u>vsplit<CR>
 nnoremap <silent> [Window]c  :<C-u>call <sid>smart_close()<CR>
@@ -2370,8 +2059,6 @@ command! SplitNicely call s:split_nicely()
 function! s:split_nicely()
   " Split nicely.
   if winwidth(0) > 80*2
-  "if winwidth(0) > 2 * winheight(0)
-  "if winwidth(0) > 2 * &winwidth
     vsplit
   else
     split
@@ -2397,7 +2084,6 @@ endfunction
 "}}}
 
 " JunkFile
-" nnoremap <silent> [Window]e  :<C-u>JunkfileOpen<CR>
 nnoremap <silent> [Window]e  :<C-u>Unite junkfile/new junkfile -start-insert<CR>
 nnoremap <silent> [Window]E  :<C-u>Unite junkfile/new junkfile -start-insert<CR>
 
@@ -2417,7 +2103,6 @@ nnoremap          [Window]U   :<C-u>GundoToggle<CR>
 " Easy escape."{{{
 inoremap jj           <ESC>
 inoremap kk           <ESC>
-" inoremap <expr> j       getline('.')[col('.') - 2] ==# 'j' ? "\<BS>\<ESC>" : 'j'
 cnoremap <expr> j       getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
 onoremap jj           <ESC>
 
@@ -2444,9 +2129,6 @@ function! ToggleVariable(variable_name)
   endif
   echo printf('%s = %s', a:variable_name, eval(a:variable_name))
 endfunction  "}}}
-
-"command! SessionLoad :source ~/.vim/.session
-"command! SessionSave :mksession! ~/.vim/.session
 
 "}}}
 
@@ -2487,20 +2169,11 @@ augroup MyAutoCmd
 	"autocmd FileType coffee     setlocal sw=2 sts=2 ts=2 et
 augroup END
 
-" taglistの設定 coffeeを追加
-" let g:tlist_coffee_settings = 'coffee;f:function;v:variable'
-
-" QuickRunのcoffee
-" let g:quickrun_config['coffee'] = {
-"      \'command' : 'coffee',
-"      \'exec' : ['%c -cbp %s']
-"      \}
-
 "------------------------------------
 " vim-coffee-script
 "------------------------------------
 " 保存時にコンパイル
-autocmd MyAutoCmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
+"autocmd MyAutoCmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
 
 "------------------------------------
 " jasmine.vim
@@ -2524,11 +2197,9 @@ autocmd MyAutoCmd BufRead,BufNewFile,BufReadPre *.coffee,*.js call JasmineSettin
 "------------------------------------
 " インデントの深さに色を付ける
 let g:indent_guides_start_level=2
-"let g:indent_guides_auto_colors=1
 let g:indent_guides_auto_colors=0
 let g:indent_guides_enable_on_vim_startup=0
 let g:indent_guides_color_change_percent=5
-"let g:indent_guides_color_change_percent=20
 let g:indent_guides_guide_size=1
 let g:indent_guides_space_guides=1
 
@@ -2543,7 +2214,6 @@ nmap <silent><Leader>ig <Plug>IndentGuidesToggle
 "}}}
 
 " Testing
-"set scrolljump=10
 
 " hack 104 http://vim-users.jp/2009/11/hack104/ {{{
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
@@ -2556,18 +2226,6 @@ command!
 \   AllMaps
 \   map <args> | map! <args> | lmap <args>
 
-" restart.vim {{{
-" 使うと大文字マークが消える？（VとかNとか）
-" let g:restart_save_window_values = 0
-" nnoremap <silent> [Space]re  :<C-u>Restart<CR>
-
-" " セッション有りはうまくいかない
-" command!
-" \   RestartWithSession
-" \   let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
-" \   | Restart
-
-"}}}
 
 if argc() == 0
   autocmd MyAutoCmd VimEnter * VimShell
@@ -2586,27 +2244,12 @@ else
 endif
 
 
-" いまいち
-function! s:vimrc_vimshell_less()
-  "if bufname('%') =~ '^less-git log -u'
-  if bufname('%') =~ 'diff'
-    set filetype=diff
-  endif
-endfunction
-autocmd MyAutoCmd FileType vimshell-less call <SID>vimrc_vimshell_less()
-
-" Don't move on *
-nnoremap * *<c-o>
-"nnoremap <silent> * :exe "silent! normal! *<c-o>"<CR>
-
-" Keep search matches in the middle of the window.
-"nnoremap n nzzzv
-"nnoremap N Nzzzv
-
-" Same when jumping around
-nnoremap g; g;zz
-nnoremap g, g,zz
-"nnoremap <c-o> <c-o>zz
+"del " Don't move on *
+"del nnoremap * *<c-o>
+"del
+"del " Same when jumping around
+"del nnoremap g; g;zz
+"del nnoremap g, g,zz
 
 "---------------------------------------------------------------------------
 
