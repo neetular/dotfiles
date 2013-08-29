@@ -9,5 +9,6 @@ augroup filetypedetect
 	au! BufRead,BufNewFile *vimperatorrc	setfiletype vimperator
 	au! BufRead,BufNewFile *.inc,*.ccode,*.cdata	setfiletype cpp
 	au! BufRead,BufNewFile *.jsfl	setfiletype javascript
+	au! BufRead,BufNewFile *.tp		setfiletype taskpaper
 augroup END
 
