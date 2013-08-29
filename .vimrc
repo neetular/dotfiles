@@ -1742,6 +1742,7 @@ let g:vinarise_enable_auto_detect = 1
 " taskpaper "{{{
 let g:task_paper_date_format = "%Y-%m-%d %H%M" " ':' が邪魔
 "let g:task_paper_date_format = "%Y-%m-%d %H:%M"
+let g:task_paper_follow_move = 0
 
 function! s:taskpaper_setup() "{{{
   nmap <buffer> t  <Leader>t
@@ -1761,8 +1762,8 @@ function! s:taskpaper_setup() "{{{
   inoremap <buffer><expr><TAB>    pumvisible() ? "\<C-n>" : "\<Space>\<BS>\<Esc>>>A"
   inoremap <buffer><expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<Space>\<BS>\<Esc><<A"
 
-  Arpeggio nnoremap <buffer> an  /-.*next<CR>
-  Arpeggio nnoremap <buffer> vn  /-.*next<CR>
+  Arpeggio nnoremap <buffer> an  /-.*@next<CR>
+  Arpeggio nnoremap <buffer> vn  /-.*@next<CR>
 endfunction"}}}
 
 augroup vimrc-taskpaper
