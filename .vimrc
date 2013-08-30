@@ -82,7 +82,7 @@ NeoBundle 'thinca/vim-singleton.git'
 " vim-singleton.git "{{{
 " 特別に最初に処理
 if has('clientserver')
-	call singleton#enable()
+  call singleton#enable()
 endif
 "}}}
 
@@ -432,11 +432,11 @@ set smartcase
 
 "set grepprg=grep\ -nH
 if executable('ag')
-	"set grepprg=ag\ --nocolor\ --nogroup
-	"set grepprg=ag\ --nocolor\ --nogroup\ --smart-case
-	set grepprg=ag\ --nocolor\ --nogroup\ --smart-case\ --skip-vcs-ignores
+  "set grepprg=ag\ --nocolor\ --nogroup
+  "set grepprg=ag\ --nocolor\ --nogroup\ --smart-case
+  set grepprg=ag\ --nocolor\ --nogroup\ --smart-case\ --skip-vcs-ignores
 else
-	set grepprg=internal
+  set grepprg=internal
 endif
 
 " 編集に関する設定:
@@ -592,9 +592,9 @@ function! s:my_tabline()  "{{{
     let s .= '[' . no
     let s .= mod . ']'
 
-"	"test
-"	let s .= ' ' . pathshorten(gettabvar(i, 'cwd')) . ' '
-	"
+    "  "test
+    "  let s .= ' ' . pathshorten(gettabvar(i, 'cwd')) . ' '
+    "
     let s .= title
     let s .= '%#TabLineFill#'
     let s .= ' '
@@ -775,12 +775,12 @@ function! bundle.hooks.on_source(bundle)
   " <C-f>, <C-b>: page move.
   inoremap <expr><C-f>  pumvisible() ? "\<PageDown>" : "\<Right>"
   inoremap <expr><C-b>  pumvisible() ? "\<PageUp>"   : "\<Left>"
-"  " <C-y>: paste.
-"  inoremap <expr><C-y>  pumvisible() ? neocomplcache#close_popup() :  "\<C-r>\""
-"  " <C-e>: close popup.
-"  inoremap <expr><C-e>  pumvisible() ? neocomplcache#cancel_popup() : "\<End>"
+  "  " <C-y>: paste.
+  "  inoremap <expr><C-y>  pumvisible() ? neocomplcache#close_popup() :  "\<C-r>\""
+  "  " <C-e>: close popup.
+  "  inoremap <expr><C-e>  pumvisible() ? neocomplcache#cancel_popup() : "\<End>"
   " <C-k>: unite completion.
-"  imap <C-k>  <Plug>(neocomplcache_start_unite_complete)
+  "  imap <C-k>  <Plug>(neocomplcache_start_unite_complete)
   " - unite quick match.
 
   " imap <expr> -  pumvisible() ?
@@ -802,9 +802,9 @@ function! bundle.hooks.on_source(bundle)
 
   " <TAB>: completion.
   " 2013/06/18 neosnippet 優先のため調整
-"  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
-"        \ <SID>check_back_space() ? "\<TAB>" :
-"        \ neocomplcache#start_manual_complete()
+  "  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
+  "        \ <SID>check_back_space() ? "\<TAB>" :
+  "        \ neocomplcache#start_manual_complete()
 
   function! s:check_back_space() "{{{
     let col = col('.') - 1
@@ -889,7 +889,7 @@ nnoremap <silent> [Window]G
       \ :<C-u>Unite grep -buffer-name=search -auto-preview -no-quit -resume<CR>
 
 nnoremap <expr><silent> [unite]l
-  \ ":\<C-u>Unite -buffer-name=line -input=" . @/ . " -no-start-insert line\<CR>"
+      \ ":\<C-u>Unite -buffer-name=line -input=" . @/ . " -no-start-insert line\<CR>"
 
 
 " <C-t>: Tab pages
@@ -1016,11 +1016,11 @@ function! bundle.hooks.on_source(bundle)
 
     " default
     let g:unite_quick_match_table =
-    			\ get(g:, 'unite_quick_match_table', {
-    			\     'a' : 0, 's' : 1, 'd' : 2, 'f' : 3, 'g' : 4, 'h' : 5, 'j' : 6, 'k' : 7, 'l' : 8, ';' : 9,
-    			\     'q' : 10, 'w' : 11, 'e' : 12, 'r' : 13, 't' : 14, 'y' : 15, 'u' : 16, 'i' : 17, 'o' : 18, 'p' : 19,
-    			\     '1' : 20, '2' : 21, '3' : 22, '4' : 23, '5' : 24, '6' : 25, '7' : 26, '8' : 27, '9' : 28, '0' : 29,
-    			\ })
+          \ get(g:, 'unite_quick_match_table', {
+          \     'a' : 0, 's' : 1, 'd' : 2, 'f' : 3, 'g' : 4, 'h' : 5, 'j' : 6, 'k' : 7, 'l' : 8, ';' : 9,
+          \     'q' : 10, 'w' : 11, 'e' : 12, 'r' : 13, 't' : 14, 'y' : 15, 'u' : 16, 'i' : 17, 'o' : 18, 'p' : 19,
+          \     '1' : 20, '2' : 21, '3' : 22, '4' : 23, '5' : 24, '6' : 25, '7' : 26, '8' : 27, '9' : 28, '0' : 29,
+          \ })
 
     " Custom actions."{{{
     let my_tabopen = {
@@ -1038,35 +1038,35 @@ function! bundle.hooks.on_source(bundle)
     unlet my_tabopen
     "}}}
 
-	nmap <buffer> <ESC>      <Plug>(unite_exit)
-	imap <buffer> jj      <Plug>(unite_insert_leave)
-	imap <buffer><expr> j unite#smart_map('j', '')
-	imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
-	"pending      imap <buffer> <TAB>   <Plug>(unite_select_next_line)
-	imap <buffer> '     <Plug>(unite_quick_match_default_action)
-	nmap <buffer> '     <Plug>(unite_quick_match_default_action)
-	imap <buffer><expr> x
-				\ unite#smart_map('x', "\<Plug>(unite_quick_match_choose_action)")
-	nmap <buffer> x     <Plug>(unite_quick_match_choose_action)
-	nmap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
-	imap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
+    nmap <buffer> <ESC>      <Plug>(unite_exit)
+    imap <buffer> jj      <Plug>(unite_insert_leave)
+    imap <buffer><expr> j unite#smart_map('j', '')
+    imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
+    "pending      imap <buffer> <TAB>   <Plug>(unite_select_next_line)
+    imap <buffer> '     <Plug>(unite_quick_match_default_action)
+    nmap <buffer> '     <Plug>(unite_quick_match_default_action)
+    imap <buffer><expr> x
+          \ unite#smart_map('x', "\<Plug>(unite_quick_match_choose_action)")
+    nmap <buffer> x     <Plug>(unite_quick_match_choose_action)
+    nmap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
+    imap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
 
-	" <C-l>: manual neocomplcache completion.
-	"inoremap <buffer> <C-l>  <C-x><C-u><C-p><Down>
-	inoremap <silent> <buffer> <expr> <C-f> unite#do_action('vimfiler')
-	nnoremap <silent> <buffer> <expr> <C-f> unite#do_action('vimfiler')
+    " <C-l>: manual neocomplcache completion.
+    "inoremap <buffer> <C-l>  <C-x><C-u><C-p><Down>
+    inoremap <silent> <buffer> <expr> <C-f> unite#do_action('vimfiler')
+    nnoremap <silent> <buffer> <expr> <C-f> unite#do_action('vimfiler')
 
-	inoremap <silent> <buffer> <expr> <C-s> unite#do_action('vimshell')
-	nnoremap <silent> <buffer> <expr> <C-s> unite#do_action('vimshell')
+    inoremap <silent> <buffer> <expr> <C-s> unite#do_action('vimshell')
+    nnoremap <silent> <buffer> <expr> <C-s> unite#do_action('vimshell')
 
-	nmap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
-	imap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
-	imap <buffer> <C-y>     <Plug>(unite_narrowing_path)
-	nmap <buffer> <C-y>     <Plug>(unite_narrowing_path)
-	nmap <buffer> <C-j>     <Plug>(unite_toggle_auto_preview)
-	nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
-	nnoremap <buffer><expr> S      unite#mappings#set_current_filters(
-				\ empty(unite#mappings#get_current_filters()) ? ['sorter_reverse'] : [])
+    nmap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
+    imap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
+    imap <buffer> <C-y>     <Plug>(unite_narrowing_path)
+    nmap <buffer> <C-y>     <Plug>(unite_narrowing_path)
+    nmap <buffer> <C-j>     <Plug>(unite_toggle_auto_preview)
+    nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
+    nnoremap <buffer><expr> S      unite#mappings#set_current_filters(
+          \ empty(unite#mappings#get_current_filters()) ? ['sorter_reverse'] : [])
   endfunction "}}}
 
   " Variables.
@@ -1074,15 +1074,15 @@ function! bundle.hooks.on_source(bundle)
   let g:unite_winheight = 20
   let g:unite_enable_start_insert = 0
   let g:unite_enable_short_source_names = 0
-  
+
   let g:unite_source_file_mru_limit = 300
   let g:unite_source_directory_mru_limit = 300
   let g:unite_cursor_line_highlight = 'TabLineSel'
-  
+
   " For optimize.
-  let g:unite_source_file_mru_time_format= 		'(%m/%d %H:%M) '
-  let g:unite_source_directory_mru_time_format = 	'(%m/%d %H:%M) '
-  
+  let g:unite_source_file_mru_time_format       = '(%m/%d %H:%M) '
+  let g:unite_source_directory_mru_time_format  = '(%m/%d %H:%M) '
+
   let g:unite_source_file_mru_filename_format = ':~:.'
 
   if s:is_windows
@@ -1160,36 +1160,36 @@ function! bundle.hooks.on_source(bundle)
     nunmap <buffer> <C-P>
 
     " Use zsh history.
-	let g:unite_source_vimshell_external_history_path = expand('~/.zsh_history')
+    let g:unite_source_vimshell_external_history_path = expand('~/.zsh_history')
 
-	" altercmd
-	call vimshell#altercmd#define('u', 'cdup')
+    " altercmd
+    call vimshell#altercmd#define('u', 'cdup')
     call vimshell#altercmd#define('g', 'git')
     call vimshell#altercmd#define('i', 'iexe')
     call vimshell#altercmd#define('q', 'exit')
 
-	" alias
+    " alias
     call vimshell#set_alias('ll', 'ls -l')
     call vimshell#set_alias('la', 'ls -a')
     call vimshell#set_alias('t', 'vim --split=tabedit $$args')
-	call vimshell#set_alias('up', 'cdup')
+    call vimshell#set_alias('up', 'cdup')
 
-	" galias
-	call vimshell#set_galias('L', '| less')
-	call vimshell#set_galias('G', '| grep')
-	call vimshell#set_galias('W', '| wc')
-	call vimshell#set_galias('H', '| head')
-	call vimshell#set_galias('T', '| tail')
-	call vimshell#set_galias('X', '| xargs')
-	call vimshell#set_galias('...', '../..')
-	call vimshell#set_galias('....', '../../..')
-	call vimshell#set_galias('.....', '../../../..')
+    " galias
+    call vimshell#set_galias('L', '| less')
+    call vimshell#set_galias('G', '| grep')
+    call vimshell#set_galias('W', '| wc')
+    call vimshell#set_galias('H', '| head')
+    call vimshell#set_galias('T', '| tail')
+    call vimshell#set_galias('X', '| xargs')
+    call vimshell#set_galias('...', '../..')
+    call vimshell#set_galias('....', '../../..')
+    call vimshell#set_galias('.....', '../../../..')
 
     inoremap <buffer><expr>' pumvisible() ? "\<C-y>" : "'"
     imap <buffer><BS> <Plug>(vimshell_another_delete_backward_char)
     imap <buffer><C-h> <Plug>(vimshell_another_delete_backward_char)
     imap <buffer><C-k> <Plug>(vimshell_zsh_complete)
-	inoremap <buffer> <expr><silent> <C-p>  unite#sources#vimshell_history#start_complete(!0)
+    inoremap <buffer> <expr><silent> <C-p>  unite#sources#vimshell_history#start_complete(!0)
 
     nnoremap <buffer>gi GA
     nmap <buffer>tj <Plug>(vimshell_next_prompt)
@@ -1203,17 +1203,17 @@ function! bundle.hooks.on_source(bundle)
     call vimshell#set_alias('k', ':UniteWithCurrentDir -buffer-name=files
           \  -buffer-name=files -no-split file_mru buffer file args')
 
-	call vimshell#hook#add('chpwd', 'my_chpwd', s:vimshell_hooks.chpwd)
+    call vimshell#hook#add('chpwd', 'my_chpwd', s:vimshell_hooks.chpwd)
 
   endfunction
 
   let s:vimshell_hooks = {}
   function! s:vimshell_hooks.chpwd(args, context)
-	  if len(split(glob('*'), '\n')) < 100
-		  call vimshell#execute('ls')
-	  else
-		  call vimshell#execute('echo "Many files."')
-	  endif
+    if len(split(glob('*'), '\n')) < 100
+      call vimshell#execute('ls')
+    else
+      call vimshell#execute('echo "Many files."')
+    endif
   endfunction
 
 endfunction
@@ -1251,8 +1251,8 @@ let g:vimfiler_sort_type = 'Time'
 "
 
 if s:is_mac
-	" Mac OS X.
-	let g:vimfiler_quick_look_command = 'qlmanage -p'
+  " Mac OS X.
+  let g:vimfiler_quick_look_command = 'qlmanage -p'
 endif
 
 autocmd MyAutoCmd FileType vimfiler call s:vimfiler_my_settings()
@@ -1328,11 +1328,11 @@ nnoremap [Space]gg :<C-u>Git<Space>
 nnoremap [Space]gs :<C-u>Gstatus<cr>
 
 augroup MyAutoCmd
-	" autocmd User fugitive
-	" 			\ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
-	" 			\   nnoremap <buffer> .. :edit %:h<CR> |
-	" 			\ endif
-	" autocmd BufReadPost fugitive://* set bufhidden=delete
+  " autocmd User fugitive
+  "       \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+  "       \   nnoremap <buffer> .. :edit %:h<CR> |
+  "       \ endif
+  " autocmd BufReadPost fugitive://* set bufhidden=delete
 augroup END
 
 "}}}
@@ -1524,8 +1524,8 @@ function! s:taskpaper_setup() "{{{
 endfunction"}}}
 
 augroup vimrc-taskpaper
-autocmd!
-autocmd FileType taskpaper call s:taskpaper_setup()
+  autocmd!
+  autocmd FileType taskpaper call s:taskpaper_setup()
 augroup END
 
 "}}}
@@ -1544,10 +1544,10 @@ xmap <C-d> <Plug>(textmanip-duplicate-down)
 " vim-arpeggio "{{{
 let bundle = neobundle#get('vim-arpeggio')
 function! bundle.hooks.on_source(bundle)
-	Arpeggio inoremap jk  <Esc>
-	Arpeggio inoremap jl  <Esc>
-	Arpeggio xnoremap jk  <Esc>
-	Arpeggio xnoremap jl  <Esc>
+  Arpeggio inoremap jk  <Esc>
+  Arpeggio inoremap jl  <Esc>
+  Arpeggio xnoremap jk  <Esc>
+  Arpeggio xnoremap jl  <Esc>
 endfunction
 
 unlet bundle
@@ -2153,20 +2153,20 @@ let t:cwd = getcwd()
 
 " dotnet-complete.git
 augroup MyAutoCmd
-	autocmd BufNewFile,BufRead *.cs      setl omnifunc=cs#complete
-	autocmd BufNewFile,BufRead *.cs      setl bexpr=cs#balloon()
-	autocmd BufNewFile,BufRead *.cs      setl ballooneval
+  autocmd BufNewFile,BufRead *.cs      setl omnifunc=cs#complete
+  autocmd BufNewFile,BufRead *.cs      setl bexpr=cs#balloon()
+  autocmd BufNewFile,BufRead *.cs      setl ballooneval
 augroup END
 
 "}}}
 
 " coffee {{{
 augroup MyAutoCmd
-	" vimにcoffeeファイルタイプを認識させる
-	autocmd BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
-	" インデントを設定
-	autocmd FileType coffee     setlocal sw=2 sts=2 ts=2 "etなし
-	"autocmd FileType coffee     setlocal sw=2 sts=2 ts=2 et
+  " vimにcoffeeファイルタイプを認識させる
+  autocmd BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
+  " インデントを設定
+  autocmd FileType coffee     setlocal sw=2 sts=2 ts=2 "etなし
+  "autocmd FileType coffee     setlocal sw=2 sts=2 ts=2 et
 augroup END
 
 "------------------------------------
@@ -2204,9 +2204,9 @@ let g:indent_guides_guide_size=1
 let g:indent_guides_space_guides=1
 
 augroup MyAutoCmd
-	autocmd VimEnter,Colorscheme * : hi IndentGuidesOdd  guifg=#333333 guibg=#0b1b27 ctermbg=235
-	autocmd VimEnter,Colorscheme * : hi IndentGuidesEven guifg=#000000 guibg=#1b2b37 ctermbg=237
-	autocmd FileType coffee,ruby,javascript,python IndentGuidesEnable
+  autocmd VimEnter,Colorscheme * : hi IndentGuidesOdd  guifg=#333333 guibg=#0b1b27 ctermbg=235
+  autocmd VimEnter,Colorscheme * : hi IndentGuidesEven guifg=#000000 guibg=#1b2b37 ctermbg=237
+  autocmd FileType coffee,ruby,javascript,python IndentGuidesEnable
 augroup END
 nmap <silent><Leader>ig <Plug>IndentGuidesToggle
 
@@ -2222,9 +2222,9 @@ vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><C
 " Vim-users.jp - Hack #203: 定義されているマッピングを調べる
 " http://vim-users.jp/2011/02/hack203/
 command!
-\   -nargs=* -complete=mapping
-\   AllMaps
-\   map <args> | map! <args> | lmap <args>
+      \   -nargs=* -complete=mapping
+      \   AllMaps
+      \   map <args> | map! <args> | lmap <args>
 
 
 if argc() == 0
