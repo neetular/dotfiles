@@ -1637,7 +1637,8 @@ endfunction
 nnoremap    K   <Nop>
 xnoremap    K   <Nop>
 nnoremap <silent> KA  :<C-u>Unite -buffer-name=files args<CR>
-nnoremap <silent> KK  :<C-u>UniteWithCurrentDir -buffer-name=files args file_mru buffer file<CR>
+"nnoremap <silent> KK  :<C-u>UniteWithCurrentDir -buffer-name=files args file_mru buffer file<CR>
+nnoremap <expr><silent> KK  ":<C-u>Unite -input=" . getcwd() . "\\ " . " -buffer-name=files args file_mru buffer file\<CR>"
 nnoremap <silent> Kk  :<C-u>Unite               -buffer-name=files args file_mru buffer file<CR>
 
 nnoremap <silent> KR  :<C-u>Unite -buffer-name=files file_rec/async buffer file<CR>
