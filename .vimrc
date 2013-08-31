@@ -1699,6 +1699,11 @@ for n in range(1, 9)
   execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
 
+" Tab move
+for n in range(0, 9)
+  execute 'nnoremap <silent> [Window]'.n  ':<C-u>tabmove'.n.'<CR>'
+endfor
+
 " neetular }}}
 
 " neetular Quickfix  " {{{
