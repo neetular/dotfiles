@@ -1117,6 +1117,19 @@ function! bundle.hooks.on_source(bundle)
 endfunction
 unlet bundle
 
+" TODO: コマンド名と引数の対応が不自然なのをなんとかする
+" TODO: -no-split など指定可能なように
+command! -nargs=* MyUniteWithCurrentDir
+      \ call s:MyUniteWithCurrentDir(<f-args>)
+function! s:MyUniteWithCurrentDir(...)
+  let args = "\\ "
+  if a:0
+    let args .= join(a:000, "\\ ")
+  endif
+  execute "Unite -input=" . getcwd() . args . " -buffer-name=files args file_mru buffer file"
+endfunction
+"nnoremap <expr><silent> KK  ":<C-u>Unite -input=" . getcwd() . "\\ " . " -buffer-name=files args file_mru buffer file\<CR>"
+
 " unite.vim "}}}
 
 " vimshell "{{{
@@ -1200,8 +1213,9 @@ function! bundle.hooks.on_source(bundle)
     call vimshell#set_alias('j', ':Unite -buffer-name=files
           \ -default-action=lcd -no-split -input=$$args directory_mru')
 
-    call vimshell#set_alias('k', ':UniteWithCurrentDir -buffer-name=files
-          \  -buffer-name=files -no-split file_mru buffer file args')
+    "call vimshell#set_alias('k', ':UniteWithCurrentDir -buffer-name=files
+    "      \  -buffer-name=files -no-split file_mru buffer file args')
+    call vimshell#set_alias('k', ':MyUniteWithCurrentDir $$args')
 
     call vimshell#hook#add('chpwd', 'my_chpwd', s:vimshell_hooks.chpwd)
 
@@ -1638,7 +1652,8 @@ nnoremap    K   <Nop>
 xnoremap    K   <Nop>
 nnoremap <silent> KA  :<C-u>Unite -buffer-name=files args<CR>
 "nnoremap <silent> KK  :<C-u>UniteWithCurrentDir -buffer-name=files args file_mru buffer file<CR>
-nnoremap <expr><silent> KK  ":<C-u>Unite -input=" . getcwd() . "\\ " . " -buffer-name=files args file_mru buffer file\<CR>"
+"nnoremap <expr><silent> KK  ":<C-u>Unite -input=" . getcwd() . "\\ " . " -buffer-name=files args file_mru buffer file\<CR>"
+nnoremap <silent> KK  :<C-u>MyUniteWithCurrentDir<CR>
 nnoremap <silent> Kk  :<C-u>Unite               -buffer-name=files args file_mru buffer file<CR>
 
 nnoremap <silent> KR  :<C-u>Unite -buffer-name=files file_rec/async buffer file<CR>
