@@ -1670,6 +1670,8 @@ nmap :  <Plug>(vimshell_switch)
 
 nnoremap KW  :<C-u>TweetVimHomeTimeline<CR>
 
+nnoremap <silent> KT  :<C-u>Unite tag  -buffer-name=tag -start-insert<CR>
+
 " }}}
 
 " neetular Tag jumping  " {{{
