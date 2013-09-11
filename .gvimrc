@@ -19,11 +19,12 @@ set antialias
 set iminsert=0
 set imsearch=0
 
-highlight Cursor guifg=NONE guibg=#1b6b4d
-highlight CursorIM guifg=NONE guibg=#c951ab
+highlight Cursor guifg=bg guibg=#9dd8a7
+highlight CursorIM guifg=bg guibg=#c951ab
 
 highlight Pmenu ctermbg=8 guibg=#606060
 highlight PmenuSel ctermbg=1 guibg=#000000 guifg=#1f82cd
 highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
 
+highlight Search guifg=NONE guibg=#07678b
 
