@@ -247,6 +247,8 @@ NeoBundle 't9md/vim-quickhl' " quickly highlight <cword> or visually selected wo
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'sjl/gundo.vim' " A git mirror of gundo.vim
 
+NeoBundle 'kana/vim-textobj-user' " Vim plugin: Create your own text objects
+NeoBundle 'kana/vim-textobj-entire' " Vim plugin: Text objects for entire buffer
 
 " <next NeoBundle here>
 " NeoBundle ''
