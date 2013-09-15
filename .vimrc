@@ -2277,5 +2277,34 @@ endif
 
 "---------------------------------------------------------------------------
 
+" Selecting changes in diff mode - Vim Tips Wiki
+" http://vim.wikia.com/wiki/Selecting_changes_in_diff_mode
+function! DiffTake(dir, oppdir)
+  let l:old = winnr()
+  exec "wincmd ".a:dir
+  " Assumption: just 2 windows side by side.
+  if (winnr() == l:old)
+    diffput
+    exec "wincmd ".a:oppdir
+  else
+    wincmd p
+    diffget
+  endif
+endfunction
+
+function! SetupDiffMappings()
+  if &diff
+    nnoremap <buffer> tl :call DiffTake("h", "l")<CR>
+    nnoremap <buffer> th :call DiffTake("l", "h")<CR>
+    nnoremap <buffer> tj ]c
+    nnoremap <buffer> tk [c
+  endif
+endfunction
+
+" vim -d
+"call SetupDiffMappings()
+" Entering diff mode from within vim - diffsplit, etc.
+autocmd FilterWritePost * call SetupDiffMappings()
+
 "
 " vim: foldmethod=marker
