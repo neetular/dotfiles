@@ -1346,8 +1346,9 @@ autocmd MyAutoCmd TabEnter * NeoBundleSource vim-tabpagecd
 
 
 " fugitive{{{
-nnoremap [Space]gg :<C-u>Git<Space>
-nnoremap [Space]gs :<C-u>Gstatus<cr>
+" 2013/09/18 vim-versions へ移行
+" nnoremap [Space]gg :<C-u>Git<Space>
+" nnoremap [Space]gs :<C-u>Gstatus<cr>
 
 augroup MyAutoCmd
   " autocmd User fugitive
@@ -1360,10 +1361,17 @@ augroup END
 "}}}
 
 " gitv{{{
-nnoremap [Space]gv :<C-u>Gitv --all<cr>
+nnoremap [Space]gv :<C-u>call <SID>gitv_by_cwd()<CR>
+"nnoremap [Space]gv :<C-u>Gitv --all<cr>
 nnoremap [Space]gV :<C-u>Gitv! --all<cr>
 vnoremap [Space]gV :<C-u>Gitv! --all<cr>
 let g:Gitv_TruncateCommitSubjects = 1
+
+function! s:gitv_by_cwd()
+  execute 'tabedit ' . versions#get_root_dir(getcwd()) . '/.git/config'
+  Gitv --all
+  execute 'tabclose '. (tabpagenr()-1)
+endfunction
 
 autocmd MyAutoCmd FileType gitv call s:my_gitv_settings()
 function! s:my_gitv_settings()
@@ -1428,7 +1436,11 @@ nnoremap [Space]esr :<C-u>EvervimSearchByQuery<SPACE>updated:day-1
 "}}}
 
 " vim-versions.git "{{{
-" 2013/06/09 ちゃんと動いてない
+let g:versions#type#git#log#append_is_pushed = 1
+nnoremap [Space]g<CR> :<C-u>UniteVersions<CR>
+nnoremap [Space]gs :<C-u>UniteVersions status:!<CR>
+nnoremap [Space]gl :<C-u>UniteVersions log:%<CR>
+
 
 "}}}
 
