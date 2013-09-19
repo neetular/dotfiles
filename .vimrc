@@ -36,6 +36,10 @@ if s:is_windows
   set shellslash
 endif
 
+if has('gui_macvim')
+  set macmeta
+endif
+
 " Anywhere SID.
 function! s:SID_PREFIX()
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
@@ -2297,10 +2301,29 @@ endfunction
 
 function! SetupDiffMappings()
   if &diff
-    nnoremap <buffer> tl :call DiffTake("h", "l")<CR>
-    nnoremap <buffer> th :call DiffTake("l", "h")<CR>
-    nnoremap <buffer> tj ]c
-    nnoremap <buffer> tk [c
+    nnoremap <buffer> <SID>(difftake-right)  :call DiffTake("h", "l")<CR>
+    nnoremap <buffer> <SID>(difftake-left)   :call DiffTake("l", "h")<CR>
+    nnoremap <buffer> <SID>(diffnext)        ]c
+    nnoremap <buffer> <SID>(diffprev)        [c
+
+    nmap <buffer> tl <SID>(difftake-right)
+    nmap <buffer> th <SID>(difftake-left)
+    nmap <buffer> tj <SID>(diffnext)
+    nmap <buffer> tk <SID>(diffprev)
+
+    nmap <buffer> <A-l> <SID>(difftake-right)
+    nmap <buffer> <A-h> <SID>(difftake-left)
+    nmap <buffer> <A-j> <SID>(diffnext)
+    nmap <buffer> <A-k> <SID>(diffprev)
+
+    " .gvimrc でコマンドキーバインドを切っておく
+    nmap <buffer> <D-l> <SID>(difftake-right)
+    nmap <buffer> <D-h> <SID>(difftake-left)
+    nmap <buffer> <D-j> <SID>(diffnext)
+    nmap <buffer> <D-k> <SID>(diffprev)
+
+    nnoremap <buffer> <D-u> :<C-u>diffupdate<CR>
+    nnoremap <buffer> <D-o> :<C-u>diffoff!<CR>
   endif
 endfunction
 
