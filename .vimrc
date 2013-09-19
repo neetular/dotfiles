@@ -1242,59 +1242,62 @@ nnoremap <silent>   [Space]v   :<C-u>VimFiler -find<CR>
 nnoremap <silent>   [Space]f   :<C-u>VimFiler -find<CR>
 nnoremap            [Space]F  :<C-u>VimFiler -buffer-name=explorer -split -simple -winwidth=35 -toggle<CR>
 
-call vimfiler#set_execute_file('vim', 'vim')
-call vimfiler#set_execute_file('txt', 'vim')
+let bundle = neobundle#get('vimfiler')
+function! bundle.hooks.on_source(bundle)
+  let g:vimfiler_as_default_explorer = 1
 
-let g:vimfiler_as_default_explorer = 1
+  " Enable file operation commands.
+  let g:vimfiler_safe_mode_by_default = 0
 
-" Enable file operation commands.
-let g:vimfiler_safe_mode_by_default = 0
+  "
+  let g:vimfiler_tree_leaf_icon   = '|'
+  let g:vimfiler_tree_opened_icon = '-'
+  let g:vimfiler_tree_closed_icon = '+'
+  let g:vimfiler_file_icon        = '-'
+  let g:vimfiler_marked_file_icon = '*'
 
-"
-let g:vimfiler_tree_leaf_icon   = '|'
-let g:vimfiler_tree_opened_icon = '-'
-let g:vimfiler_tree_closed_icon = '+'
-let g:vimfiler_file_icon        = '-'
-let g:vimfiler_marked_file_icon = '*'
+  " This variable controls default vimfiler sort type.
+  let g:vimfiler_sort_type = 'Time'
 
-" This variable controls default vimfiler sort type.
-let g:vimfiler_sort_type = 'Time'
+  " Use trashbox.
+  " Windows only and require latest vimproc.
+  "let g:unite_kind_file_use_trashbox = 1
+  "
 
-" Use trashbox.
-" Windows only and require latest vimproc.
-"let g:unite_kind_file_use_trashbox = 1
-"
+  if s:is_mac
+    " Mac OS X.
+    let g:vimfiler_quick_look_command = 'qlmanage -p'
+  endif
 
-if s:is_mac
-  " Mac OS X.
-  let g:vimfiler_quick_look_command = 'qlmanage -p'
-endif
+  autocmd MyAutoCmd FileType vimfiler call s:vimfiler_my_settings()
+  function! s:vimfiler_my_settings() "{{{
+    "call vimfiler#set_execute_file('vim', 'vim')
+    call vimfiler#set_execute_file('vim', ['vim', 'notepad'])
+    call vimfiler#set_execute_file('txt', 'vim')
 
-autocmd MyAutoCmd FileType vimfiler call s:vimfiler_my_settings()
-function! s:vimfiler_my_settings() "{{{
-  nunmap <buffer> <C-j>
-  nunmap <buffer> S
-  nunmap <buffer> K
-  nunmap <buffer> U
+    nunmap <buffer> <C-j>
+    nunmap <buffer> S
+    nunmap <buffer> K
+    nunmap <buffer> U
 
-  nnoremap <silent><buffer> J
-        \ :<C-u>Unite -buffer-name=files -default-action=lcd directory_mru<CR>
-  nmap <buffer> s  <Plug>(vimfiler_select_sort_type)
-  nmap <buffer> F  <Plug>(vimfiler_make_directory)
-  nmap <buffer> u  <Plug>(vimfiler_clear_mark_all_lines)
-  nnoremap <silent><buffer><expr> gy vimfiler#do_action('tabopen')
+    nnoremap <silent><buffer> J
+          \ :<C-u>Unite -buffer-name=files -default-action=lcd directory_mru<CR>
+    nmap <buffer> s  <Plug>(vimfiler_select_sort_type)
+    nmap <buffer> F  <Plug>(vimfiler_make_directory)
+    nmap <buffer> u  <Plug>(vimfiler_clear_mark_all_lines)
+    nnoremap <silent><buffer><expr> gy vimfiler#do_action('tabopen')
+    nmap <buffer> '  <Plug>(vimfiler_quick_look)
 
-  " ちゃんと動いてない 2013/06/09
-  nmap <buffer> '  <Plug>(vimfiler_quick_look)
+    nmap <silent><buffer> >
+          \ <Plug>(vimfiler_cd_vim_current_dir)K>
 
-  nmap <silent><buffer> >
-        \ <Plug>(vimfiler_cd_vim_current_dir)K>
+    setlocal cursorline
+    setlocal nonumber
 
-  setlocal cursorline
-  setlocal nonumber
+  endfunction "}}}
+endfunction
 
-endfunction "}}}
-
+unlet bundle
 " vimfiler "}}}
 
 " EasyMotion "{{{
