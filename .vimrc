@@ -1545,6 +1545,10 @@ function! s:taskpaper_setup() "{{{
         \    :<C-u>call taskpaper#toggle_tag('next', '')<CR>
   nnoremap <buffer> <silent> <Leader>tN
         \    :<C-u>call taskpaper#delete_tag('next', '')<CR>
+  nnoremap <buffer> <silent> <Leader>tw
+        \    :<C-u>call taskpaper#toggle_tag('waiting', '')<CR>
+  nnoremap <buffer> <silent> <Leader>tW
+        \    :<C-u>call taskpaper#delete_tag('waiting', '')<CR>
 
   " nextを消しつつdoneをトグル、次の行へ
   nmap <buffer> <silent> <Leader>t<Space>  tNtdj
@@ -1593,6 +1597,24 @@ xmap [Space]m <Plug>(quickhl-toggle)
 nmap [Space]M <Plug>(quickhl-reset)
 xmap [Space]M <Plug>(quickhl-reset)
 nmap [Space]j <Plug>(quickhl-match)
+let g:quickhl_colors = [
+      \ "gui=bold ctermfg=7   ctermbg=1   guibg=#a07040 guifg=#ffffff",
+      \ "gui=bold ctermfg=7   ctermbg=2   guibg=#4070a0 guifg=#ffffff",
+      \ "gui=bold ctermfg=7   ctermbg=3   guibg=#40a070 guifg=#ffffff",
+      \ "gui=bold ctermfg=7   ctermbg=4   guibg=#70a040 guifg=#ffffff",
+      \ "gui=bold ctermfg=7   ctermbg=5   guibg=#0070e0 guifg=#ffffff",
+      \ "gui=bold ctermfg=7   ctermbg=6   guibg=#007020 guifg=#ffffff",
+      \ "gui=bold ctermfg=7   ctermbg=21  guibg=#d4a00d guifg=#ffffff",
+      \ "gui=bold ctermfg=7   ctermbg=22  guibg=#06287e guifg=#ffffff",
+      \ "gui=bold ctermfg=7   ctermbg=45  guibg=#5b3674 guifg=#ffffff",
+      \ "gui=bold ctermfg=7   ctermbg=16  guibg=#4c8f2f guifg=#ffffff",
+      \ "gui=bold ctermfg=7   ctermbg=50  guibg=#1060a0 guifg=#ffffff",
+      \ "gui=bold ctermfg=16  ctermbg=153 guibg=#0a7383 guifg=#ffffff",
+      \ "gui=bold ctermfg=7   ctermbg=56  guibg=#a0b0c0 guifg=black",
+      \ ]
+let g:quickhl_keywords = [
+      \ "@waiting",
+      \ ]
 "}}}
 
 
