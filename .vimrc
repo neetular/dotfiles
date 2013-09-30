@@ -559,27 +559,28 @@ let &statusline .= '[%{&fileformat}]'
 let &statusline .= '[ts=%{&tabstop}]'
 let &statusline .= '  %-14.(%l,%c%V%) %P'
 
-function! s:my_tabline()  "{{{
+function! s:good_length_cwd()  "{{{
   let s = ''
-
   " カレントディレクトリ名を'/'で分割した部分が3つ未満かどうかで短縮方法分岐
   let modpath = fnamemodify( getcwd(), ':~' )
   if len(split(modpath, '/')) < 3
-    let pathtxt = modpath
+    let s = modpath
   else
     " 末端2階層以外を短縮
-    let pathtxt = pathshorten(fnamemodify( getcwd(), ':~:h' ))
-    let pathtxt .= '/'
-    let pathtxt .= fnamemodify( getcwd(), ':t' )
+    let s = pathshorten(fnamemodify( getcwd(), ':~:h' ))
+    let s .= '/'
+    let s .= fnamemodify( getcwd(), ':t' )
   endif
+  return s
+endfunction"}}}
 
-  let s .= '%#Folded#'
-  let s .= '%-50('
-  let s .= '[' . (tabpagenr() - 1) . ']'
-  let s .= ' ' . pathtxt . ' '
-  let s .= '%)'
-  let s .= '%#TabLineFill#'
-  let s .= ' '
+function! s:fixed_length_cwd()  "{{{
+  return printf('%-32s', s:good_length_cwd())
+endfunction"}}}
+
+" lightline.vim 有効なので今は使ってない
+function! s:my_tabline()  "{{{
+  let s = s:fixed_length_cwd()
 
   for i in range(1, tabpagenr('$'))
     let bufnrs = tabpagebuflist(i)
@@ -1690,8 +1691,25 @@ function! MyFileencoding()
 endfunction
 
 function! MyMode()
-  return winwidth('.') > 60 ? lightline#mode() : ''
+  return  &ft == 'unite' ? 'Unite' :
+        \ &ft == 'vimfiler' ? 'VimFiler' :
+        \ &ft == 'vimshell' ? 'VimShell' :
+        \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
+
+let g:lightline.component_expand = {
+      \ 'my_tabline_left': s:SID_PREFIX() . 'fixed_length_cwd',
+      \ 'tabs': 'lightline#tabs' }
+let g:lightline.component_type = {
+    \ 'my_tabline_left': 'raw',
+    \ 'tabs': 'tabsel', }
+let g:lightline.tabline = {
+      \ 'left': [ [ 'my_tabline_left' ], [ 'tabs' ] ],
+      \ 'right': [ [ 'close' ] ] }
+
+"}}}
+
+" vim-operator-comment "{{{
 "}}}
 
 " <next plugin setting> "{{{
