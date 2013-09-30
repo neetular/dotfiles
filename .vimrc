@@ -2167,7 +2167,7 @@ nnoremap          [Window]U   :<C-u>GundoToggle<CR>
 
 " Easy escape."{{{
 inoremap jj           <ESC>
-inoremap kk           <ESC>
+"inoremap kk           <ESC>
 cnoremap <expr> j       getcmdline()[getcmdpos()-2] ==# 'j' ? "\<BS>\<C-c>" : 'j'
 onoremap jj           <ESC>
 
