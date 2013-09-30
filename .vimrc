@@ -1161,7 +1161,7 @@ function! bundle.hooks.on_source(bundle)
 
   "let g:vimshell_right_prompt = 'fugitive#statusline()'
   let g:vimshell_prompt = '% '
-  let g:vimshell_force_overwrite_statusline = 1
+"  let g:vimshell_force_overwrite_statusline = 1
   let g:vimshell_enable_transient_user_prompt = 0
 
   " 現在時刻出してみた
@@ -1489,6 +1489,7 @@ let g:neosnippet#snippets_directory = '~/.vim/snippets/,~/.vimbundles/vim-snippe
 "}}}
 
 " surround.vim"{{{
+" MEMO: こういうふうにしないとunite.vimのバッファでdでdeleteとかすぐできない
 let g:surround_no_mappings = 1
 autocmd MyAutoCmd FileType * call s:define_surround_keymappings()
 
@@ -1629,6 +1630,10 @@ let g:quickhl_keywords = [
 
 
 " lightline.vim "{{{
+let g:unite_force_overwrite_statusline = 0
+let g:vimfiler_force_overwrite_statusline = 0
+let g:vimshell_force_overwrite_statusline = 0
+
 let g:lightline = {
       \ 'colorscheme': 'default',
       \ 'mode_map': { 'c': 'NORMAL' },
@@ -1709,7 +1714,7 @@ nnoremap <silent> KK  :<C-u>MyUniteWithCurrentDir<CR>
 nnoremap <silent> Kk  :<C-u>Unite               -buffer-name=files args file_mru buffer file<CR>
 
 nnoremap <silent> KR  :<C-u>Unite -buffer-name=files file_rec/async buffer file<CR>
-nnoremap <silent> KF  :<C-u>Unite -buffer-name=files file<CR>
+nnoremap <silent> KF  :<C-u>Unite -buffer-name=files file file/new<CR>
 
 nnoremap <silent> KO  :<C-u>Unite outline -start-insert -resume<CR>
 
