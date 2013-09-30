@@ -251,8 +251,15 @@ NeoBundle 't9md/vim-quickhl' " quickly highlight <cword> or visually selected wo
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'sjl/gundo.vim' " A git mirror of gundo.vim
 
+" textobj
 NeoBundle 'kana/vim-textobj-user' " Vim plugin: Create your own text objects
 NeoBundle 'kana/vim-textobj-entire' " Vim plugin: Text objects for entire buffer
+NeoBundle 'kana/vim-textobj-indent' " Vim plugin: Text objects for indented blocks of lines
+
+" operator
+NeoBundle 'kana/vim-operator-user' " Vim plugin: Define your own operator easily
+NeoBundle 'emonkak/vim-operator-comment' " Vim plugin: Operator for comment and uncomment
+
 
 " <next NeoBundle here>
 " NeoBundle ''
@@ -1586,6 +1593,9 @@ function! bundle.hooks.on_source(bundle)
   Arpeggio inoremap jl  <Esc>
   Arpeggio xnoremap jk  <Esc>
   Arpeggio xnoremap jl  <Esc>
+
+  Arpeggio map oc <Plug>(operator-comment)
+  Arpeggio map od <Plug>(operator-uncomment)
 endfunction
 
 unlet bundle
@@ -2365,6 +2375,56 @@ endfunction
 "call SetupDiffMappings()
 " Entering diff mode from within vim - diffsplit, etc.
 autocmd FilterWritePost * call SetupDiffMappings()
+
+
+" config/vim/personal/dot.vimrc at master · kana/config
+" https://github.com/kana/config/blob/master/vim/personal/dot.vimrc
+
+" Objmap - :map for text objects "{{{3
+"
+" Keys for text objects should be mapped in Visual mode and Operator-pending
+" mode. The following commands are just wrappers to avoid DRY violation.
+
+command! -nargs=+ Objmap
+\ execute 'omap' <q-args>
+\ | execute 'vmap' <q-args>
+
+command! -nargs=+ Objnoremap
+\ execute 'onoremap' <q-args>
+\ | execute 'vnoremap' <q-args>
+
+command! -nargs=+ Objunmap
+\ execute 'ounmap' <q-args>
+\ | execute 'vunmap' <q-args>
+
+
+" Operatormap - :map for oeprators "{{{3
+"
+" Keys for operators should be mapped in Normal mode and Visual mode. The
+" following commands are just wrappers to avoid DRY violation.
+"
+" FIXME: How about mapping to g@ in Operator-pending mode
+" to use {operator}{operator} pattern?
+
+command! -nargs=+ Operatormap
+\ execute 'nmap' <q-args>
+\ | execute 'vmap' <q-args>
+
+command! -nargs=+ Operatornoremap
+\ execute 'nnoremap' <q-args>
+\ | execute 'vnoremap' <q-args>
+
+command! -nargs=+ Operatorunmap
+\ execute 'nunmap' <q-args>
+\ | execute 'vunmap' <q-args>
+
+" Synonyms for <> and [], same as plugin surround.
+Objnoremap aa a>
+Objnoremap ia i>
+Objnoremap ar a]
+Objnoremap ir i]
+
+
 
 "
 " vim: foldmethod=marker
