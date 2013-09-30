@@ -1138,7 +1138,7 @@ function! s:MyUniteWithCurrentDir(...)
   if a:0
     let args .= join(a:000, "\\ ")
   endif
-  execute "Unite -input=" . getcwd() . args . " -buffer-name=files args file_mru buffer file"
+  execute "Unite -input=" . getcwd() . '/' . args . " -buffer-name=files args file_mru buffer file"
 endfunction
 "nnoremap <expr><silent> KK  ":<C-u>Unite -input=" . getcwd() . "\\ " . " -buffer-name=files args file_mru buffer file\<CR>"
 
