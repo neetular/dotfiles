@@ -1068,6 +1068,7 @@ function! bundle.hooks.on_source(bundle)
     "inoremap <buffer> <C-l>  <C-x><C-u><C-p><Down>
     inoremap <silent> <buffer> <expr> <C-f> unite#do_action('vimfiler')
     nnoremap <silent> <buffer> <expr> <C-f> unite#do_action('vimfiler')
+    nnoremap <silent> <buffer> <expr> : unite#do_action('vimshell')
 
     inoremap <silent> <buffer> <expr> <C-s> unite#do_action('vimshell')
     nnoremap <silent> <buffer> <expr> <C-s> unite#do_action('vimshell')
@@ -1143,6 +1144,18 @@ function! s:MyUniteWithCurrentDir(...)
 endfunction
 "nnoremap <expr><silent> KK  ":<C-u>Unite -input=" . getcwd() . "\\ " . " -buffer-name=files args file_mru buffer file\<CR>"
 
+command! -nargs=* MyVim
+      \ call s:MyVim(<f-args>)
+function! s:MyVim(...)
+  if a:0 >=2
+    execute 'args ' . join(a:000)
+  elseif a:0
+    execute 'edit ' . a:1
+  else
+    VimFiler
+  endif
+endfunction
+
 " unite.vim "}}}
 
 " vimshell "{{{
@@ -1193,6 +1206,7 @@ function! bundle.hooks.on_source(bundle)
     call vimshell#altercmd#define('g', 'git')
     call vimshell#altercmd#define('i', 'iexe')
     call vimshell#altercmd#define('q', 'exit')
+    call vimshell#altercmd#define('o', 'open')
 
     " alias
     call vimshell#set_alias('ll', 'ls -l')
@@ -1229,6 +1243,8 @@ function! bundle.hooks.on_source(bundle)
     "call vimshell#set_alias('k', ':UniteWithCurrentDir -buffer-name=files
     "      \  -buffer-name=files -no-split file_mru buffer file args')
     call vimshell#set_alias('k', ':MyUniteWithCurrentDir $$args')
+
+    call vimshell#set_alias('v', ':MyVim $$args')
 
     call vimshell#hook#add('chpwd', 'my_chpwd', s:vimshell_hooks.chpwd)
 
