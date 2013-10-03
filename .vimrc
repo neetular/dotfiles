@@ -92,7 +92,7 @@ endif
 
 NeoBundleFetch 'Shougo/neobundle.vim', '', 'default'
 
-NeoBundle 'git://github.com/Shougo/neocomplcache.git'
+"NeoBundle 'git://github.com/Shougo/neocomplcache.git'
 
 NeoBundle 'Shougo/unite.vim'
 
@@ -260,6 +260,14 @@ NeoBundle 'kana/vim-textobj-indent' " Vim plugin: Text objects for indented bloc
 NeoBundle 'kana/vim-operator-user' " Vim plugin: Define your own operator easily
 NeoBundle 'emonkak/vim-operator-comment' " Vim plugin: Operator for comment and uncomment
 
+NeoBundle 'Shougo/neocomplete.vim'
+NeoBundleDisable neocomplcache.vim
+call neobundle#config('neocomplete.vim', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
+      \   'insert' : 1,
+      \   'commands' : 'NeoCompleteBufferMakeCache',
+      \ }})
 
 " <next NeoBundle here>
 " NeoBundle ''
@@ -644,9 +652,150 @@ augroup END
 "---------------------------------------------------------------------------
 " Plugin:"{{{
 "
+" neocomplete.vim"{{{
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+
+let bundle = neobundle#get('neocomplete.vim')
+function! bundle.hooks.on_source(bundle)
+  "from neocomplcache >>>
+  " Use smartcase.
+  let g:neocomplete#enable_smart_case = 1
+
+  " Use fuzzy completion.
+  let g:neocomplete#enable_fuzzy_completion = 1
+  " Set minimum syntax keyword length.
+  let g:neocomplete#sources#syntax#min_keyword_length = 3
+  " Set auto completion length.
+  let g:neocomplete#auto_completion_start_length = 2
+  " Set manual completion length.
+  let g:neocomplete#manual_completion_start_length = 0
+  " Set minimum keyword length.
+  let g:neocomplete#min_keyword_length = 3
+
+  let g:neocomplete#enable_cursor_hold_i = 0
+  let g:neocomplete#cursor_hold_i_time = 300
+  let g:neocomplete#enable_insert_char_pre = 0
+  let g:neocomplete#enable_prefetch = 0
+  let g:neocomplete#skip_auto_completion_time = '0.6'
+
+  " For auto select.
+  ""let g:neocomplete#enable_complete_select = 1
+  let g:neocomplete#enable_auto_select = 0
+  let g:neocomplete#enable_refresh_always = 1
+  ""if g:neocomplete#enable_complete_select
+  ""  set completeopt-=noselect
+  ""  set completeopt+=noinsert
+  ""endif
+
+  let g:neocomplete#enable_auto_delimiter = 1
+  let g:neocomplete#disable_auto_select_buffer_name_pattern = '\[Command Line\]'
+  let g:neocomplete#max_list = 100
+  let g:neocomplete#force_overwrite_completefunc = 1
+  if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+  endif
+  if !exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+  endif
+
+  " For clang_complete.
+  let g:neocomplete#force_overwrite_completefunc = 1
+  let g:neocomplete#force_omni_input_patterns.c =
+        \ '[^.[:digit:] *\t]\%(\.\|->\)'
+  let g:neocomplete#force_omni_input_patterns.cpp =
+        \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+  let g:clang_complete_auto = 0
+  let g:clang_auto_select = 0
+  let g:clang_use_library   = 1
+
+  " For jedi-vim.
+  let g:jedi#auto_initialization = 1
+  let g:jedi#popup_on_dot = 0
+  let g:jedi#rename_command = '<leader>R'
+  let g:neocomplete#force_omni_input_patterns.python = '[^. \t]\.\w*'
+
+  " Define dictionary.
+  let g:neocomplete#sources#dictionary#dictionaries = {
+        \ 'default' : '',
+        \ }
+
+  let g:neocomplete#sources#omni#functions = {
+        \ 'cs' : 'cs#complete',
+        \ }
+
+  " Define keyword pattern.
+  if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+  endif
+  let g:neocomplete#keyword_patterns['default'] = '[0-9a-zA-Z:#_]\+'
+  let g:neocomplete#keyword_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+  if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+  endif
+  let g:neocomplete#sources#omni#input_patterns.php = '[^. *\t]\.\w*\|\h\w*::'
+  let g:neocomplete#sources#omni#input_patterns.mail = '^\s*\w\+'
+  let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+  let g:neocomplete#sources#buffer#cache_limit_size = 500000
+
+  if !exists('g:neocomplete#same_filetypes')
+    let  g:neocomplete#same_filetypes = {}
+  endif
+
+  let g:neocomplete#sources#vim#complete_functions = {
+        \ 'Unite' : 'unite#complete_source',
+        \ 'VimShellExecute' :
+        \      'vimshell#vimshell_execute_complete',
+        \ 'VimShellInteractive' :
+        \      'vimshell#vimshell_execute_complete',
+        \ 'VimShellTerminal' :
+        \      'vimshell#vimshell_execute_complete',
+        \ 'VimShell' : 'vimshell#complete',
+        \ 'VimFiler' : 'vimfiler#complete',
+        \ 'Ref' : 'ref#complete',
+        \ 'Vinarise' : 'vinarise#complete',
+        \}
+
+  " mappings."{{{
+  " <C-f>, <C-b>: page move.
+  inoremap <expr><C-f>  pumvisible() ? "\<PageDown>" : "\<Right>"
+  inoremap <expr><C-b>  pumvisible() ? "\<PageUp>"   : "\<Left>"
+
+  " <C-h>, <BS>: close popup and delete backword char.
+  inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+
+  " <C-n>: neocomplete.
+  inoremap <expr><C-n>  pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>\<Down>"
+  " <C-p>: keyword completion.
+  inoremap <expr><C-p>  pumvisible() ? "\<C-p>" : "\<C-p>\<C-n>"
+
+  inoremap <expr>'  pumvisible() ? neocomplete#close_popup() : "'"
+
+  imap <C-s>  <Plug>(neosnippet_start_unite_snippet)
+
+  function! s:check_back_space() "{{{
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction"}}}
+  " <S-TAB>: completion back.
+  inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
+
+  " For cursor moving in insert mode(Not recommended)
+  inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
+  inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
+  inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
+  inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
+  "}}}
+
+  "<<< from neocomplcache
+endfunction
+"}}}
+
 " neocomplcache.vim"{{{
 " Use neocomplcache.
-let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_at_startup = 0
 
 let bundle = neobundle#get('neocomplcache')
 function! bundle.hooks.on_source(bundle)
@@ -1229,12 +1378,14 @@ function! bundle.hooks.on_source(bundle)
     imap <buffer><BS> <Plug>(vimshell_another_delete_backward_char)
     imap <buffer><C-h> <Plug>(vimshell_another_delete_backward_char)
     imap <buffer><C-k> <Plug>(vimshell_zsh_complete)
-    inoremap <buffer> <expr><silent> <C-p>  unite#sources#vimshell_history#start_complete(!0)
+    "inoremap <buffer> <expr><silent> <C-p>  unite#sources#vimshell_history#start_complete(!0)
 
     nnoremap <buffer>gi GA
     nmap <buffer>tj <Plug>(vimshell_next_prompt)
     nmap <buffer>tk <Plug>(vimshell_previous_prompt)
     nmap <buffer><C-S-K> <Plug>(vimshell_delete_previous_output)
+    imap <buffer><C-p>  <Plug>(vimshell_history_neocomplete)
+    "imap <buffer><C-g>  <Plug>(vimshell_history_neocomplete)
 
     " Auto jump.
     call vimshell#set_alias('j', ':Unite -buffer-name=files
@@ -2002,16 +2153,16 @@ autocmd MyAutoCmd CmdwinLeave * call s:quit_cmdwin()
 function! s:init_cmdwin()
   "NeoBundleSource vim-altercmd
 
-  let g:neocomplcache_enable_auto_select = 0
-  let b:neocomplcache_sources_list = ['vim_complete']
+  let g:neocomplete#enable_auto_select = 0
+  "let g:neocomplete#sources_list = ['vim_complete']
 
   nnoremap <buffer><silent> q :<C-u>quit<CR>
   nnoremap <buffer><silent> <TAB> :<C-u>quit<CR>
-  inoremap <buffer><expr><CR> neocomplcache#close_popup()."\<CR>"
+  inoremap <buffer><expr><CR> neocomplete#close_popup()."\<CR>"
   inoremap <buffer><expr><C-h> col('.') == 1 ?
-        \ "\<ESC>:quit\<CR>" : neocomplcache#cancel_popup()."\<C-h>"
+        \ "\<ESC>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
   inoremap <buffer><expr><BS> col('.') == 1 ?
-        \ "\<ESC>:quit\<CR>" : neocomplcache#cancel_popup()."\<C-h>"
+        \ "\<ESC>:quit\<CR>" : neocomplete#cancel_popup()."\<C-h>"
 
   " Completion.
   inoremap <buffer><expr><TAB>  pumvisible() ?
@@ -2021,7 +2172,7 @@ function! s:init_cmdwin()
 endfunction
 
 function! s:quit_cmdwin()
-  let g:neocomplcache_enable_auto_select = 1
+  let g:neocomplete#enable_auto_select = 1
 endfunction
 
 "}}}
