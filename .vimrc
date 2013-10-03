@@ -1517,10 +1517,26 @@ function! s:define_surround_keymappings()
     silent! nunmap <buffer> ys
     silent! nunmap <buffer> yS
   else
-    nmap <buffer>         ds   <Plug>Dsurround
-    nmap <buffer>         cs   <Plug>Csurround
-    nmap <buffer>         ys   <Plug>Ysurround
-    nmap <buffer>         yS   <Plug>YSurround
+    "nmap <buffer>         ds   <Plug>Dsurround
+    "nmap <buffer>         cs   <Plug>Csurround
+    "nmap <buffer>         ys   <Plug>Ysurround
+    "nmap <buffer>         yS   <Plug>YSurround
+    nmap <buffer> ds     <Plug>Dsurround
+    nmap <buffer> cs     <Plug>Csurround
+    nmap <buffer> ys     <Plug>Ysurround
+    nmap <buffer> yS     <Plug>Ysurround$
+    nmap <buffer> yss    <Plug>Yssurround
+    nmap <buffer> ygs    <Plug>Ygsurround
+    nmap <buffer> ygS    <Plug>Ygsurround$
+    nmap <buffer> ygss   <Plug>Ygssurround
+    nmap <buffer> ygsgs  <Plug>Ygssurround
+    xmap <buffer> s      <Plug>Vsurround
+    xmap <buffer> S      <Plug>VSurround
+    xmap <buffer> gs     <Plug>Vgsurround
+    xmap <buffer> gS     <Plug>VgSurround
+    imap <buffer> <C-S>  <Plug>Isurround
+    imap <buffer> <C-G>s <Plug>Isurround
+    imap <buffer> <C-G>S <Plug>ISurround
   endif
 endfunction
 "}}}
