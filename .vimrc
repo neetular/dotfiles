@@ -673,8 +673,8 @@ function! bundle.hooks.on_source(bundle)
   " Set minimum keyword length.
   let g:neocomplete#min_keyword_length = 3
 
-  let g:neocomplete#enable_cursor_hold_i = 0
-  let g:neocomplete#cursor_hold_i_time = 300
+  let g:neocomplete#enable_cursor_hold_i = 1
+  let g:neocomplete#cursor_hold_i_time = 200
   let g:neocomplete#enable_insert_char_pre = 0
   let g:neocomplete#enable_prefetch = 0
   let g:neocomplete#skip_auto_completion_time = '0.6'
@@ -756,6 +756,10 @@ function! bundle.hooks.on_source(bundle)
         \ 'Ref' : 'ref#complete',
         \ 'Vinarise' : 'vinarise#complete',
         \}
+
+  " Change default matcher.
+  call neocomplete#custom#source('_', 'matchers',
+        \ ['matcher_head'])
 
   " mappings."{{{
   " <C-f>, <C-b>: page move.
