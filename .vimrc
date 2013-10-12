@@ -1791,12 +1791,18 @@ unlet bundle
 "}}}
 
 " vim-quickhl "{{{
-nmap [Space]m <Plug>(quickhl-toggle)
-xmap [Space]m <Plug>(quickhl-toggle)
-nmap [Space]M <Plug>(quickhl-reset)
-xmap [Space]M <Plug>(quickhl-reset)
-nmap [Space]j <Plug>(quickhl-match)
-let g:quickhl_colors = [
+nmap [Space]m <Plug>(quickhl-manual-this)
+xmap [Space]m <Plug>(quickhl-manual-this)
+"nmap [Space]m <Plug>(quickhl-manual-toggle)
+"xmap [Space]m <Plug>(quickhl-manual-toggle)
+nmap [Space]M <Plug>(quickhl-manual-reset)
+xmap [Space]M <Plug>(quickhl-manual-reset)
+nmap [Space]j <Plug>(quickhl-cword-toggle)
+nmap [Space]] <Plug>(quickhl-tag-toggle)
+"map H <Plug>(operator-quickhl-manual-this-motion)
+
+let g:quickhl_manual_enable_at_startup = 1
+let g:quickhl_manual_colors = [
       \ "gui=bold ctermfg=7   ctermbg=1   guibg=#a07040 guifg=#ffffff",
       \ "gui=bold ctermfg=7   ctermbg=2   guibg=#4070a0 guifg=#ffffff",
       \ "gui=bold ctermfg=7   ctermbg=3   guibg=#40a070 guifg=#ffffff",
@@ -1811,7 +1817,7 @@ let g:quickhl_colors = [
       \ "gui=bold ctermfg=16  ctermbg=153 guibg=#0a7383 guifg=#ffffff",
       \ "gui=bold ctermfg=7   ctermbg=56  guibg=#a0b0c0 guifg=black",
       \ ]
-let g:quickhl_keywords = [
+let g:quickhl_manual_keywords = [
       \ "@waiting",
       \ ]
 "}}}
