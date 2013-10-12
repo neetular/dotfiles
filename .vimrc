@@ -1360,6 +1360,7 @@ function! bundle.hooks.on_source(bundle)
     call vimshell#altercmd#define('i', 'iexe')
     call vimshell#altercmd#define('q', 'exit')
     call vimshell#altercmd#define('o', 'open')
+    call vimshell#altercmd#define('hi', 'history')
 
     " alias
     call vimshell#set_alias('ll', 'ls -l')
@@ -1563,6 +1564,8 @@ function! s:my_gitv_settings()
   " nnoremap <buffer> <Space>R :<C-u>Git revert <C-r>=<SID>gitv_get_current_hash()<CR><CR>
   " nnoremap <buffer> <Space>h :<C-u>Git cherry-pick <C-r>=<SID>gitv_get_current_hash()<CR><CR>
   " nnoremap <buffer> <Space>rh :<C-u>Git reset --hard <C-r>=<SID>gitv_get_current_hash()<CR>
+  nnoremap <buffer> gr :<C-u>Git revert --no-edit <C-r>=<SID>gitv_get_current_hash()<CR>
+  nnoremap <buffer> gc :<C-u>Git cherry-pick <C-r>=<SID>gitv_get_current_hash()<CR>
 
   nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
   nnoremap <silent><buffer> f <C-w>w<C-f><C-w>w
