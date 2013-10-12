@@ -718,11 +718,14 @@ function! bundle.hooks.on_source(bundle)
   " Define dictionary.
   let g:neocomplete#sources#dictionary#dictionaries = {
         \ 'default' : '',
+        \ 'vimshell' : $HOME.'/.vimshell/command-history',
         \ }
 
   let g:neocomplete#sources#omni#functions = {
         \ 'cs' : 'cs#complete',
         \ }
+
+  let g:neocomplete#enable_auto_close_preview = 0
 
   " Define keyword pattern.
   if !exists('g:neocomplete#keyword_patterns')
@@ -779,6 +782,22 @@ function! bundle.hooks.on_source(bundle)
 
   imap <C-s>  <Plug>(neosnippet_start_unite_snippet)
 
+  inoremap <expr><C-x><C-f>
+        \ neocomplete#start_manual_complete('file')
+
+  inoremap <expr><C-g>     neocomplete#undo_completion()
+  inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+  " <CR>: close popup and save indent.
+  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+  function! s:my_cr_function()
+    return neocomplete#smart_close_popup() . "\<CR>"
+  endfunction
+
+  " <TAB>: completion.
+  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ neocomplete#start_manual_complete()
   function! s:check_back_space() "{{{
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~ '\s'
