@@ -22,8 +22,8 @@ set imsearch=0
 highlight Cursor guifg=bg guibg=#9dd8a7
 highlight CursorIM guifg=bg guibg=#c951ab
 
-highlight Pmenu ctermbg=8 guibg=#606060
-highlight PmenuSel ctermbg=1 guibg=#000000 guifg=#1f82cd
+highlight Pmenu ctermbg=8 guibg=#000000 guifg=#288ecc
+highlight PmenuSel ctermbg=1 guibg=#40b98b guifg=#000000
 highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
 
 highlight Search guifg=NONE guibg=#07678b

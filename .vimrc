@@ -491,6 +491,8 @@ endif
 " Keymapping timeout.
 set timeout timeoutlen=3000 ttimeoutlen=100
 
+" Ignore case on insert completion.
+set infercase
 
 "}}}
 
@@ -673,16 +675,16 @@ function! bundle.hooks.on_source(bundle)
   " Set minimum keyword length.
   let g:neocomplete#min_keyword_length = 3
 
-  let g:neocomplete#enable_cursor_hold_i = 1
-  let g:neocomplete#cursor_hold_i_time = 200
+  let g:neocomplete#enable_cursor_hold_i = 0
+  let g:neocomplete#cursor_hold_i_time = 100
   let g:neocomplete#enable_insert_char_pre = 0
-  let g:neocomplete#enable_prefetch = 0
+  let g:neocomplete#enable_prefetch = 1
   let g:neocomplete#skip_auto_completion_time = '0.6'
 
   " For auto select.
   ""let g:neocomplete#enable_complete_select = 1
   let g:neocomplete#enable_auto_select = 0
-  let g:neocomplete#enable_refresh_always = 1
+  let g:neocomplete#enable_refresh_always = 0
   ""if g:neocomplete#enable_complete_select
   ""  set completeopt-=noselect
   ""  set completeopt+=noinsert
