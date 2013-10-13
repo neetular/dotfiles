@@ -1409,7 +1409,7 @@ function! bundle.hooks.on_source(bundle)
     nnoremap <buffer>gi GA
     nmap <buffer>tj <Plug>(vimshell_next_prompt)
     nmap <buffer>tk <Plug>(vimshell_previous_prompt)
-    nmap <buffer><C-S-K> <Plug>(vimshell_delete_previous_output)
+    nmap <buffer>td <Plug>(vimshell_delete_previous_output)
     imap <buffer><C-p>  <Plug>(vimshell_history_neocomplete)
     "imap <buffer><C-g>  <Plug>(vimshell_history_neocomplete)
 
