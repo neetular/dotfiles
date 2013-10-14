@@ -747,6 +747,7 @@ function! bundle.hooks.on_source(bundle)
   if !exists('g:neocomplete#same_filetypes')
     let  g:neocomplete#same_filetypes = {}
   endif
+  let g:neocomplete#same_filetypes._ = '_' " Q: I want to complete from all buffers.
 
   let g:neocomplete#sources#vim#complete_functions = {
         \ 'Unite' : 'unite#complete_source',
@@ -763,8 +764,13 @@ function! bundle.hooks.on_source(bundle)
         \}
 
   " Change default matcher.
-  call neocomplete#custom#source('_', 'matchers',
-        \ ['matcher_head'])
+  ""  call neocomplete#custom#source('_', 'matchers',
+  ""        \ ['matcher_head'])
+
+  if !exists('g:neocomplete#text_mode_filetypes')
+    let g:neocomplete#text_mode_filetypes = {}
+  endif
+  let g:neocomplete#text_mode_filetypes.gitcommit = 0
 
   " mappings."{{{
   " <C-f>, <C-b>: page move.
@@ -1953,7 +1959,7 @@ nnoremap <silent> KF  :<C-u>Unite -buffer-name=files file file/new<CR>
 
 nnoremap <silent> KO  :<C-u>Unite outline -start-insert -resume<CR>
 
-nnoremap <silent> KJ  :<C-u>Unite -buffer-name=files -default-action=lcd directory_mru<CR>
+nnoremap <silent> KJ  :<C-u>Unite -buffer-name=files -start-insert -default-action=lcd directory_mru<CR>
 nnoremap <silent> KM  :<C-u>Unite menu<CR>
 nnoremap KS  :<C-u>Unite source<CR>
 nnoremap KU  q:Unite<Space>
