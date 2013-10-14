@@ -649,7 +649,7 @@ augroup MyAutoCmd
   autocmd FileType * if (&readonly || !&modifiable) && !hasmapto('q', 'n')
         \ | nnoremap <buffer><silent> q :<C-u>call <sid>smart_close()<CR>| endif
 
-  autocmd TabLeave COMMIT_EDITMSG let s:last_tabpagenr = tabpagenr()
+  autocmd QuitPre COMMIT_EDITMSG let s:last_tabpagenr = tabpagenr()
   autocmd TabEnter * if (s:last_tabpagenr > 1)
         \ | execute 'tabnext ' . (s:last_tabpagenr - 1) | let s:last_tabpagenr = 0 | endif
 augroup END
