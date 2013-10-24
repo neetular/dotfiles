@@ -738,7 +738,8 @@ function! bundle.hooks.on_source(bundle)
   if !exists('g:neocomplete#keyword_patterns')
     let g:neocomplete#keyword_patterns = {}
   endif
-  let g:neocomplete#keyword_patterns['default'] = '[0-9a-zA-Z:#_]\+'
+  let g:neocomplete#keyword_patterns._ = '\h\w*'
+  "let g:neocomplete#keyword_patterns['default'] = '[0-9a-zA-Z:#_]\+'
   let g:neocomplete#keyword_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
   if !exists('g:neocomplete#sources#omni#input_patterns')
@@ -2198,7 +2199,7 @@ autocmd MyAutoCmd CmdwinLeave * call s:quit_cmdwin()
 function! s:init_cmdwin()
   "NeoBundleSource vim-altercmd
 
-  let g:neocomplete#enable_auto_select = 0
+  "let g:neocomplete#enable_auto_select = 0
   "let g:neocomplete#sources_list = ['vim_complete']
 
   nnoremap <buffer><silent> q :<C-u>quit<CR>
@@ -2217,7 +2218,7 @@ function! s:init_cmdwin()
 endfunction
 
 function! s:quit_cmdwin()
-  let g:neocomplete#enable_auto_select = 1
+  "let g:neocomplete#enable_auto_select = 1
 endfunction
 
 "}}}
