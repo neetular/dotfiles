@@ -269,6 +269,10 @@ call neobundle#config('neocomplete.vim', {
       \   'commands' : 'NeoCompleteBufferMakeCache',
       \ }})
 
+NeoBundle 'kana/vim-textobj-function' " Vim plugin: Text objects for functions
+NeoBundle 'thinca/vim-textobj-function-javascript' " Text objects for functions in javascript.
+NeoBundle 'Shougo/context_filetype.vim' " Context filetype library for Vim script
+
 " <next NeoBundle here>
 " NeoBundle ''
 
@@ -1326,7 +1330,7 @@ function! s:MyUniteWithCurrentDir(...)
   if a:0
     let args .= join(a:000, "\\ ")
   endif
-  execute "Unite -input=" . getcwd() . '/' . args . " -buffer-name=files args file_mru buffer file"
+  execute "Unite -input=" . getcwd() . '/' . args . " -here -direction=belowright -buffer-name=files args file_mru buffer file"
 endfunction
 "nnoremap <expr><silent> KK  ":<C-u>Unite -input=" . getcwd() . "\\ " . " -buffer-name=files args file_mru buffer file\<CR>"
 
@@ -1378,6 +1382,8 @@ function! bundle.hooks.on_source(bundle)
   let g:vimshell_prompt_expr = '"{" . strftime("%H:%M:%S") . "} L+" . max([0, (line("$") - max(keys(b:vimshell.prompt_current_dir)) - 1)]) . " > "'
   let g:vimshell_prompt_pattern = '{\%(\d\|:\)\+} L+\%(\d\)\+ > '
 
+  let g:vimshell_scrollback_limit = 3000
+
   autocmd MyAutoCmd FileType vimshell call s:vimshell_settings()
   function! s:vimshell_settings()
     nunmap <buffer> <C-K>
@@ -1426,8 +1432,9 @@ function! bundle.hooks.on_source(bundle)
     "imap <buffer><C-g>  <Plug>(vimshell_history_neocomplete)
 
     " Auto jump.
-    call vimshell#set_alias('j', ':Unite -buffer-name=files
-          \ -default-action=lcd -no-split -input=$$args directory_mru')
+    call vimshell#set_alias('j', ':Unite -here -direction=belowright -buffer-name=files
+          \ -default-action=lcd -input=$$args directory_mru')
+          "\ -default-action=lcd -no-split -input=$$args directory_mru')
 
     "call vimshell#set_alias('k', ':UniteWithCurrentDir -buffer-name=files
     "      \  -buffer-name=files -no-split file_mru buffer file args')
