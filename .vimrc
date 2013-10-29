@@ -1798,6 +1798,12 @@ function! s:taskpaper_setup() "{{{
 
   Arpeggio nnoremap <buffer> an  /-.*@next<CR>
   Arpeggio nnoremap <buffer> vn  /-.*@next<CR>
+
+  nmap <buffer> <Plug>(arpeggio-default:o)
+        \ <Plug>TaskPaperNewline
+  imap <buffer> <CR>
+        \ <Plug>TaskPaperNewline
+
 endfunction"}}}
 
 augroup vimrc-taskpaper
