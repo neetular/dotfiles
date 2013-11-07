@@ -1194,9 +1194,9 @@ function! bundle.hooks.on_source(bundle)
   call unite#custom#source(
         \ 'file_mru,buffer,file,', 'sorters',
         \ ['sorter_nothing'])
-  call unite#custom#source(
-        \ 'buffer,file_rec/async,file_mru', 'matchers',
-        \ ['matcher_glob'])
+  " call unite#custom#source(
+  "       \ 'buffer,file_rec/async,file_mru', 'matchers',
+  "       \ ['matcher_glob'])
   " call unite#custom#source(
   "       \ 'buffer,file_rec/async,file_mru', 'matchers',
   "       \ ['matcher_fuzzy'])
@@ -1279,15 +1279,19 @@ function! bundle.hooks.on_source(bundle)
   let g:unite_enable_start_insert = 0
   let g:unite_enable_short_source_names = 0
 
-  let g:unite_source_file_mru_limit = 300
-  let g:unite_source_directory_mru_limit = 300
+  let g:unite_source_file_mru_filename_format = ''
+  "let g:unite_source_file_mru_filename_format = ':~:.'
+
+  let g:unite_source_file_mru_limit = 999
+  let g:unite_source_directory_mru_limit = 999
+  let g:unite_source_file_mru_long_limit = 4999
+  let g:unite_source_directory_mru_long_limit = 4999
+
   let g:unite_cursor_line_highlight = 'TabLineSel'
 
   " For optimize.
   let g:unite_source_file_mru_time_format       = '(%m/%d %H:%M) '
   let g:unite_source_directory_mru_time_format  = '(%m/%d %H:%M) '
-
-  let g:unite_source_file_mru_filename_format = ':~:.'
 
   if s:is_windows
   else
