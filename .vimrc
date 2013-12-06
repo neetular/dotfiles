@@ -194,7 +194,7 @@ NeoBundle 'Shougo/vim-vcs', {
       \   }
 
 
-NeoBundle 'yomi322/vim-gitcomplete', { 'autoload' : {
+NeoBundleLazy 'yomi322/vim-gitcomplete', { 'autoload' : {
       \ 'filetype' : 'vimshell'
       \ }}
 
@@ -239,7 +239,6 @@ NeoBundle 'davidoc/taskpaper.vim'
 NeoBundle 'vim-scripts/VOoM'
 
 NeoBundle 't9md/vim-textmanip' " easy text manupilation for vim
-NeoBundle 'tpope/vim-markdown' " Vim Markdown runtime files
 NeoBundle 'kana/vim-arpeggio' " Vim plugin: Mappings for simultaneously pressed keys
 
 NeoBundle 'yomi322/neco-tweetvim'
@@ -273,8 +272,33 @@ NeoBundle 'kana/vim-textobj-function' " Vim plugin: Text objects for functions
 NeoBundle 'thinca/vim-textobj-function-javascript' " Text objects for functions in javascript.
 NeoBundle 'Shougo/context_filetype.vim' " Context filetype library for Vim script
 
+NeoBundle 'vim-scripts/win9xblueback.vim' " Windows9x blue back screen like colorscheme
+
+NeoBundle 'candyman.vim' " 1     dark colorscheme based on jellybeans
+NeoBundle 'chauncey/vim-jellycc' " My own version of jellybeans
+NeoBundle 'guns/jellyx.vim' " JellyX: A delicious collision of Jellybeans and Xoria256.
+NeoBundle 'cocopon/lightline-hybrid.vim' " Bring awesome color scheme Hybrid into lightline.vim
+NeoBundle 'eddsteel/vim-vimbrant' " The Vimbrant color scheme from Thayer Williams
+NeoBundle 'chriskempson/base16-vim' " Base16 for Vim
+
+"NeoBundle 'tpope/vim-markdown' " Vim Markdown runtime files
+"NeoBundle 'jtratner/vim-flavored-markdown'
+NeoBundle 'simoleone/vim-github-markdown' " Github-flavored markdown syntax highlighting for vim
+
+NeoBundle 'cohama/vim-insert-linenr' " インサートモード時に行番号の色を反転させるプラグイン
+
 " <next NeoBundle here>
 " NeoBundle ''
+
+call neobundle#config('vimshell', {
+      \ 'lazy' : 1,
+      \ 'autoload' : {
+      \   'commands' : [{ 'name' : 'VimShell',
+      \                   'complete' : 'customlist,vimshell#complete'},
+      \                 'VimShellExecute', 'VimShellInteractive',
+      \                 'VimShellTerminal', 'VimShellPop'],
+      \   'mappings' : '<Plug>(vimshell_'
+      \ }})
 
 filetype plugin indent on
 
@@ -1995,7 +2019,7 @@ nnoremap <silent> K"
       \ :<C-u>Unite -buffer-name=register register history/yank<CR>
 
 nnoremap <silent> K:
-      \ :<C-u>Unite -buffer-name=commands history/command<CR>
+      \ :<C-u>Unite -buffer-name=commands -start-insert history/command<CR>
 
 " -resume なし
 nnoremap <silent> KG
@@ -2431,13 +2455,23 @@ endfunction
 nnoremap <silent> [Window]e  :<C-u>Unite junkfile/new junkfile -start-insert<CR>
 nnoremap <silent> [Window]E  :<C-u>Unite junkfile/new junkfile -start-insert<CR>
 
+command! -nargs=0 JunkfileDay call junkfile#open_immediately(
+      \ strftime('%Y-%m-%d.txt'))
+command! -nargs=0 JunkfileDiary call junkfile#open_immediately(
+      \ strftime('%Y-%m-%d.md'))
+command! -nargs=0 JunkfileMarkdown call junkfile#open('md')
+
+command! -nargs=0 JunkfileMemo call junkfile#open_immediately(
+      \ strftime('Memo_%Y-%m-%d.md'))
+nnoremap <silent> [Window]T  :<C-u>JunkfileMemo<CR>
+
 " neetular {{{
 " タブ操作 
 nnoremap          [Window]H   :<C-u>tabrewind<Return>
 nnoremap          [Window]J   :<C-u>tabclose<Return>
 nnoremap          [Window]K   <C-w>T
 nnoremap          [Window]L   :<C-u>tabedit<Return>
-nnoremap          [Window]T   :<C-u>VimShellTab<Return>
+"nnoremap          [Window]T   :<C-u>VimShellTab<Return>
 nnoremap          [Window]:   :<C-u>VimShellTab<Return>
 nnoremap          [Window]F   :<C-u>VimFilerTab<Return>
 nnoremap          [Window]U   :<C-u>GundoToggle<CR>
@@ -2548,8 +2582,10 @@ let g:indent_guides_guide_size=1
 let g:indent_guides_space_guides=1
 
 augroup MyAutoCmd
-  autocmd VimEnter,Colorscheme * : hi IndentGuidesOdd  guifg=#333333 guibg=#0b1b27 ctermbg=235
-  autocmd VimEnter,Colorscheme * : hi IndentGuidesEven guifg=#000000 guibg=#1b2b37 ctermbg=237
+  autocmd VimEnter,Colorscheme * : hi IndentGuidesOdd  guifg=#2c241b guibg=#463624 ctermbg=235
+  autocmd VimEnter,Colorscheme * : hi IndentGuidesEven guifg=#594229 guibg=#312212 ctermbg=237
+  " autocmd VimEnter,Colorscheme * : hi IndentGuidesOdd  guifg=#333333 guibg=#0b1b27 ctermbg=235
+  " autocmd VimEnter,Colorscheme * : hi IndentGuidesEven guifg=#000000 guibg=#1b2b37 ctermbg=237
   autocmd FileType coffee,ruby,javascript,python IndentGuidesEnable
 augroup END
 nmap <silent><Leader>ig <Plug>IndentGuidesToggle
@@ -2649,7 +2685,7 @@ autocmd FilterWritePost * call SetupDiffMappings()
 " config/vim/personal/dot.vimrc at master · kana/config
 " https://github.com/kana/config/blob/master/vim/personal/dot.vimrc
 
-" Objmap - :map for text objects "{{{3
+" Objmap - :map for text objects "{{{
 "
 " Keys for text objects should be mapped in Visual mode and Operator-pending
 " mode. The following commands are just wrappers to avoid DRY violation.
@@ -2666,8 +2702,10 @@ command! -nargs=+ Objunmap
 \ execute 'ounmap' <q-args>
 \ | execute 'vunmap' <q-args>
 
+"}}}
 
-" Operatormap - :map for oeprators "{{{3
+
+" Operatormap - :map for oeprators "{{{
 "
 " Keys for operators should be mapped in Normal mode and Visual mode. The
 " following commands are just wrappers to avoid DRY violation.
@@ -2688,12 +2726,24 @@ command! -nargs=+ Operatorunmap
 \ | execute 'vunmap' <q-args>
 
 " Synonyms for <> and [], same as plugin surround.
+" <angle>
 Objnoremap aa a>
 Objnoremap ia i>
+" [rectangle]
 Objnoremap ar a]
 Objnoremap ir i]
+" 'quote'
+Objnoremap aq a'
+Objnoremap iq i'
+" "double quote"
+Objnoremap ad a"
+Objnoremap id i"
+" }}}
+"
 
-
+set cursorline
+set cursorcolumn
+nnoremap go :<C-u>!open %<CR>
 
 "
 " vim: foldmethod=marker
