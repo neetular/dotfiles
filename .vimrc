@@ -100,7 +100,6 @@ NeoBundle 'Shougo/vimproc', {
       \    },
       \ }
 
-NeoBundle 'Shougo/unite-ssh'
 
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'tsukkee/unite-tag'
@@ -143,20 +142,13 @@ NeoBundle 'gregsexton/gitv'
 
 NeoBundle 'thinca/vim-quickrun'
 
-" coffee関連
-" syntax + 自動compile
-NeoBundle 'kchmck/vim-coffee-script'
-" js BDDツール
-NeoBundle 'claco/jasmine.vim'
-" indentの深さに色を付ける
-NeoBundle 'nathanaelkane/vim-indent-guides'
 
 NeoBundle 'kakkyz81/evervim'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'hrsh7th/vim-versions.git'
 NeoBundle 'rhysd/clever-f.vim.git'
 
-" colorscheme
+" colorscheme {{{
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'altercation/solarized'
 NeoBundle 'vim-scripts/newspaper.vim'
@@ -168,6 +160,16 @@ NeoBundle 'jpo/vim-railscasts-theme'
 NeoBundle 'vim-scripts/Wombat'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'vim-scripts/rdark'
+NeoBundle 'trapd00r/neverland-vim-theme.git'
+NeoBundle 'veloce/vim-aldmeris', {'directory': 'aldmeris'}
+NeoBundle 'Pychimp/vim-luna.git'
+NeoBundle 'candyman.vim' " 1     dark colorscheme based on jellybeans
+NeoBundle 'chauncey/vim-jellycc' " My own version of jellybeans
+NeoBundle 'guns/jellyx.vim' " JellyX: A delicious collision of Jellybeans and Xoria256.
+NeoBundle 'cocopon/lightline-hybrid.vim' " Bring awesome color scheme Hybrid into lightline.vim
+NeoBundle 'eddsteel/vim-vimbrant' " The Vimbrant color scheme from Thayer Williams
+NeoBundle 'chriskempson/base16-vim' " Base16 for Vim
+" }}}
 
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
@@ -180,16 +182,12 @@ NeoBundle 'Shougo/vim-vcs', {
       \ 'autoload' : {'commands' : 'Vcs'},
       \   }
 
-
 NeoBundleLazy 'yomi322/vim-gitcomplete', { 'autoload' : {
       \ 'filetype' : 'vimshell'
       \ }}
 
 NeoBundle 'Shougo/unite-build', '', 'default'
 
-NeoBundle 'trapd00r/neverland-vim-theme.git'
-NeoBundle 'veloce/vim-aldmeris', {'directory': 'aldmeris'}
-NeoBundle 'Pychimp/vim-luna.git'
 NeoBundleLazy 'thinca/vim-prettyprint', { 'autoload' : {
       \ 'commands' : 'PP'
       \ }}
@@ -201,9 +199,6 @@ NeoBundle 'anyakichi/vim-surround', {
       \     ['n', '<Plug>Ysurround'], ['n', '<Plug>YSurround']
       \ ]}}
 
-NeoBundleLazy 'basyura/TweetVim', { 'depends' :
-      \ ['basyura/twibill.vim', 'tyru/open-browser.vim'],
-      \ 'autoload' : { 'commands' : 'TweetVimHomeTimeline' }}
 
 NeoBundleLazy 'rhysd/accelerated-jk', { 'autoload' : {
       \ 'mappings' : ['<Plug>(accelerated_jk_gj)',
@@ -221,20 +216,14 @@ call neobundle#config('vinarise', {
       \   'commands' : 'Vinarise',
       \ }})
 
-NeoBundle 'davidoc/taskpaper.vim'
 
-NeoBundle 'vim-scripts/VOoM'
 
 NeoBundle 't9md/vim-textmanip' " easy text manupilation for vim
-NeoBundle 'kana/vim-arpeggio' " Vim plugin: Mappings for simultaneously pressed keys
 
-NeoBundle 'yomi322/neco-tweetvim'
-NeoBundle 'yomi322/unite-tweetvim' " unite source for tweetvim
 
 NeoBundle 't9md/vim-quickhl' " quickly highlight <cword> or visually selected word
 
 NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'sjl/gundo.vim' " A git mirror of gundo.vim
 
 " textobj
 NeoBundle 'kana/vim-textobj-user' " Vim plugin: Create your own text objects
@@ -255,16 +244,8 @@ call neobundle#config('neocomplete.vim', {
 
 NeoBundle 'kana/vim-textobj-function' " Vim plugin: Text objects for functions
 NeoBundle 'thinca/vim-textobj-function-javascript' " Text objects for functions in javascript.
-NeoBundle 'Shougo/context_filetype.vim' " Context filetype library for Vim script
 
-NeoBundle 'vim-scripts/win9xblueback.vim' " Windows9x blue back screen like colorscheme
 
-NeoBundle 'candyman.vim' " 1     dark colorscheme based on jellybeans
-NeoBundle 'chauncey/vim-jellycc' " My own version of jellybeans
-NeoBundle 'guns/jellyx.vim' " JellyX: A delicious collision of Jellybeans and Xoria256.
-NeoBundle 'cocopon/lightline-hybrid.vim' " Bring awesome color scheme Hybrid into lightline.vim
-NeoBundle 'eddsteel/vim-vimbrant' " The Vimbrant color scheme from Thayer Williams
-NeoBundle 'chriskempson/base16-vim' " Base16 for Vim
 
 NeoBundle 'simoleone/vim-github-markdown' " Github-flavored markdown syntax highlighting for vim
 
@@ -278,12 +259,10 @@ NeoBundle 'mrtazz/simplenote.vim' " vim plugin to interact with the simplenote s
 
 NeoBundle 'itchyny/calendar.vim' " A calendar application for Vim
 
-NeoBundle 'eagletmt/ghcmod-vim'
-
 NeoBundle '5t111111/neat-json.vim'
 
-NeoBundle 'kana/vim-filetype-haskell'
 NeoBundle 'eagletmt/ghcmod-vim'
+NeoBundle 'kana/vim-filetype-haskell'
 NeoBundle 'eagletmt/neco-ghc'
 
 NeoBundle 'Shougo/neomru.vim'
@@ -911,7 +890,6 @@ nnoremap <expr><silent> [unite]l
 
 
 " <C-t>: Tab pages
-nnoremap <silent> <C-t>       :<C-u>Unite tab menu:tweetvim -start-insert<CR>
 nmap <silent> T <C-t>
 
 nnoremap <silent> [Space]b
@@ -991,12 +969,6 @@ let g:unite_source_menu_menus.unite.command_candidates = {
       \     }
 "nnoremap <silent> :u :<C-u>Unite menu:unite -resume<CR>
 
-let g:unite_source_menu_menus.tweetvim = {
-      \     'description' : 'Execute tweetvim command',
-      \ }
-let g:unite_source_menu_menus.tweetvim.command_candidates = {
-      \       'tweetvim_home_timeline'    : 'tabedit | TweetVimHomeTimeline',
-      \     }
 
 let bundle = neobundle#get('unite.vim')
 function! bundle.hooks.on_source(bundle)
@@ -1553,23 +1525,6 @@ function! s:define_surround_keymappings()
 endfunction
 "}}}
 
-" TweetVim "{{{
-" Start TweetVim.
-nnoremap <silent> [unite]w :<C-u>Unite tweetvim<CR>
-autocmd MyAutoCmd FileType tweetvim call s:tweetvim_my_settings()
-function! s:tweetvim_my_settings() "{{{
-  nunmap <buffer> t
-  nmap <buffer> t <Leader>
-  nmap <buffer> tt <Leader><Leader>
-
-  " Open say buffer.
-  nnoremap <silent><buffer> o :TweetVimSay<CR>
-  nnoremap <silent><buffer> q :close<CR>
-  "nmap <silent><buffer> j <Plug>(accelerated_jk_gj)
-endfunction "}}}
-
-let g:tweetvim_display_separator = 1
-"}}}
 
 " accelerated-jk "{{{
 if neobundle#is_installed('accelerated-jk')
@@ -1585,47 +1540,6 @@ endif
 let g:vinarise_enable_auto_detect = 0
 "}}}
 
-" taskpaper "{{{
-let g:task_paper_date_format = "%Y-%m-%d %H%M" " ':' が邪魔
-"let g:task_paper_date_format = "%Y-%m-%d %H:%M"
-let g:task_paper_follow_move = 0
-
-function! s:taskpaper_setup() "{{{
-  nmap <buffer> t  <Leader>t
-
-  " Your settings
-  nnoremap <buffer> <silent> <Leader>tn
-        \    :<C-u>call taskpaper#toggle_tag('next', '')<CR>
-  nnoremap <buffer> <silent> <Leader>tN
-        \    :<C-u>call taskpaper#delete_tag('next', '')<CR>
-  nnoremap <buffer> <silent> <Leader>tw
-        \    :<C-u>call taskpaper#toggle_tag('waiting', '')<CR>
-  nnoremap <buffer> <silent> <Leader>tW
-        \    :<C-u>call taskpaper#delete_tag('waiting', '')<CR>
-
-  " nextを消しつつdoneをトグル、次の行へ
-  nmap <buffer> <silent> <Leader>t<Space>  tNtdj
-  nmap <buffer> <silent> <Leader>ta        tD
-
-  inoremap <buffer><expr><TAB>    pumvisible() ? "\<C-n>" : "\<Space>\<BS>\<Esc>>>A"
-  inoremap <buffer><expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<Space>\<BS>\<Esc><<A"
-
-  Arpeggio nnoremap <buffer> an  /-.*@next<CR>
-  Arpeggio nnoremap <buffer> vn  /-.*@next<CR>
-
-  nmap <buffer> <Plug>(arpeggio-default:o)
-        \ <Plug>TaskPaperNewline
-  imap <buffer> <CR>
-        \ <Plug>TaskPaperNewline
-
-endfunction"}}}
-
-augroup vimrc-taskpaper
-  autocmd!
-  autocmd FileType taskpaper call s:taskpaper_setup()
-augroup END
-
-"}}}
 
 " vim-textmanip "{{{
 " 選択したテキストの移動
@@ -1638,20 +1552,6 @@ xmap <C-l> <Plug>(textmanip-move-right)
 xmap <C-d> <Plug>(textmanip-duplicate-down)
 "}}}
 
-" vim-arpeggio "{{{
-let bundle = neobundle#get('vim-arpeggio')
-function! bundle.hooks.on_source(bundle)
-  Arpeggio inoremap jk  <Esc>
-  Arpeggio inoremap jl  <Esc>
-  Arpeggio xnoremap jk  <Esc>
-  Arpeggio xnoremap jl  <Esc>
-
-  Arpeggio map oc <Plug>(operator-comment)
-  Arpeggio map od <Plug>(operator-uncomment)
-endfunction
-
-unlet bundle
-"}}}
 
 " vim-quickhl "{{{
 nmap [Space]m <Plug>(quickhl-manual-this)
@@ -1713,12 +1613,11 @@ let g:lightline = {
       \ }
 
 function! MyModified()
-  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  return &ft =~ 'help\|vimfiler' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
 function! MyReadonly()
-  return &ft !~? 'help\|vimfiler\|gundo' && &ro ? 'x' : ''
-  "return &ft !~? 'help\|vimfiler\|gundo' && &ro ? '⭤' : ''
+  return &ft !~? 'help\|vimfiler' && &ro ? 'x' : ''
 endfunction
 
 function! MyFilename()
@@ -1731,7 +1630,7 @@ function! MyFilename()
 endfunction
 
 function! MyFugitive()
-  return &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head') && strlen(fugitive#head()) ? ''.fugitive#head() : ''
+  return &ft !~? 'vimfiler' && exists('*fugitive#head') && strlen(fugitive#head()) ? ''.fugitive#head() : ''
 endfunction
 
 function! MyFileformat()
@@ -1819,7 +1718,6 @@ nnoremap <silent> KG
 nnoremap <silent> [Space]h  :<C-u>VimShellBufferDir<CR>
 nmap :  <Plug>(vimshell_switch)
 
-nnoremap KW  :<C-u>TweetVimHomeTimeline<CR>
 
 nnoremap <silent> KT  :<C-u>Unite tag  -buffer-name=tag -start-insert<CR>
 
@@ -2274,7 +2172,6 @@ nnoremap          [Window]L   :<C-u>tabedit<Return>
 "nnoremap          [Window]T   :<C-u>VimShellTab<Return>
 nnoremap          [Window]:   :<C-u>VimShellTab<Return>
 nnoremap          [Window]F   :<C-u>VimFilerTab<Return>
-nnoremap          [Window]U   :<C-u>GundoToggle<CR>
 " neetular }}}
 "}}}
 
@@ -2338,57 +2235,6 @@ augroup END
 
 "}}}
 
-" coffee {{{
-augroup MyAutoCmd
-  " vimにcoffeeファイルタイプを認識させる
-  autocmd BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
-  " インデントを設定
-  autocmd FileType coffee     setlocal sw=2 sts=2 ts=2 "etなし
-  "autocmd FileType coffee     setlocal sw=2 sts=2 ts=2 et
-augroup END
-
-"------------------------------------
-" vim-coffee-script
-"------------------------------------
-" 保存時にコンパイル
-"autocmd MyAutoCmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
-
-"------------------------------------
-" jasmine.vim
-"------------------------------------
-" ファイルタイプを変更
-function! JasmineSetting()
-  augroup MyAutoCmd
-    autocmd BufRead,BufNewFile *Helper.js,*Spec.js  set filetype=jasmine.javascript
-    autocmd BufRead,BufNewFile *Helper.coffee,*Spec.coffee  set filetype=jasmine.coffee
-    autocmd BufRead,BufNewFile,BufReadPre *Helper.coffee,*Spec.coffee  let b:quickrun_config = {'type' : 'coffee'}
-  augroup END
-  call jasmine#load_snippets()
-  map <buffer> <leader>m :JasmineRedGreen<CR>
-  command! JasmineRedGreen :call jasmine#redgreen()
-  command! JasmineMake :call jasmine#make()
-endfunction
-autocmd MyAutoCmd BufRead,BufNewFile,BufReadPre *.coffee,*.js call JasmineSetting()
-
-"------------------------------------
-" indent_guides
-"------------------------------------
-" インデントの深さに色を付ける
-let g:indent_guides_start_level=2
-let g:indent_guides_auto_colors=0
-let g:indent_guides_enable_on_vim_startup=0
-let g:indent_guides_color_change_percent=5
-let g:indent_guides_guide_size=1
-let g:indent_guides_space_guides=1
-
-augroup MyAutoCmd
-  autocmd VimEnter,Colorscheme * : hi IndentGuidesOdd  guifg=#2c241b guibg=#463624 ctermbg=235
-  autocmd VimEnter,Colorscheme * : hi IndentGuidesEven guifg=#594229 guibg=#312212 ctermbg=237
-  " autocmd VimEnter,Colorscheme * : hi IndentGuidesOdd  guifg=#333333 guibg=#0b1b27 ctermbg=235
-  " autocmd VimEnter,Colorscheme * : hi IndentGuidesEven guifg=#000000 guibg=#1b2b37 ctermbg=237
-  autocmd FileType coffee,ruby,javascript,python IndentGuidesEnable
-augroup END
-nmap <silent><Leader>ig <Plug>IndentGuidesToggle
 
 
 "}}}
