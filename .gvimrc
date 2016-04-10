@@ -1,7 +1,8 @@
 "---------------------------------------------------------------------------
 " neetular's .gvimrc
 "---------------------------------------------------------------------------
-colorscheme base16-eighties
+colorscheme neverland2
+"colorscheme base16-eighties
 "colorscheme base16-default
 "colorscheme base16-monokai
 "colorscheme hybrid
@@ -9,8 +10,12 @@ colorscheme base16-eighties
 "-------
 "colorscheme aldmeris
 
+" 背景色変更(黒板色)
+" highlight Normal guibg=#005050
+" highlight Folded guibg=#004040
+
 set guifont=Ricty\ Discord:h13
-"set guifont=Ricty\ Discord:h18
+"set guifont=Ricty\ Discord:h17
 
 set guioptions&
 set guioptions-=e
@@ -38,7 +43,8 @@ highlight CursorLine NONE
 highlight CursorLine gui=underline
 highlight CursorLineNr gui=bold guifg=#dedfdf
 highlight CursorColumn NONE
-highlight CursorColumn guibg=#050505
+highlight CursorColumn guibg=#353535
+"highlight CursorColumn guibg=#050505
 
 " MacVimのキーバインドを切る
 " 参考：
