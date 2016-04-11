@@ -1,7 +1,8 @@
 "---------------------------------------------------------------------------
 " neetular's .gvimrc
 "---------------------------------------------------------------------------
-colorscheme neverland2
+colorscheme base16-summerfruit
+"colorscheme neverland2
 "colorscheme base16-eighties
 "colorscheme base16-default
 "colorscheme base16-monokai

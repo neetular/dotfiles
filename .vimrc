@@ -192,13 +192,7 @@ NeoBundleLazy 'thinca/vim-prettyprint', { 'autoload' : {
       \ 'commands' : 'PP'
       \ }}
 
-NeoBundle 'anyakichi/vim-surround', {
-      \ 'autoload' : {
-      \   'mappings' : [
-      \     ['n', '<Plug>Dsurround'], ['n', '<Plug>Csurround'],
-      \     ['n', '<Plug>Ysurround'], ['n', '<Plug>YSurround']
-      \ ]}}
-
+NeoBundle 'tpope/vim-surround'
 
 NeoBundleLazy 'rhysd/accelerated-jk', { 'autoload' : {
       \ 'mappings' : ['<Plug>(accelerated_jk_gj)',
@@ -1488,43 +1482,6 @@ let g:neosnippet#snippets_directory = '~/.vim/snippets/,~/.vimbundles/vim-snippe
 " ref.vim "{{{
 
 "}}}
-
-" surround.vim"{{{
-" MEMO: こういうふうにしないとunite.vimのバッファでdでdeleteとかすぐできない
-let g:surround_no_mappings = 1
-autocmd MyAutoCmd FileType * call s:define_surround_keymappings()
-
-function! s:define_surround_keymappings()
-  if !&l:modifiable
-    silent! nunmap <buffer> ds
-    silent! nunmap <buffer> cs
-    silent! nunmap <buffer> ys
-    silent! nunmap <buffer> yS
-  else
-    "nmap <buffer>         ds   <Plug>Dsurround
-    "nmap <buffer>         cs   <Plug>Csurround
-    "nmap <buffer>         ys   <Plug>Ysurround
-    "nmap <buffer>         yS   <Plug>YSurround
-    nmap <buffer> ds     <Plug>Dsurround
-    nmap <buffer> cs     <Plug>Csurround
-    nmap <buffer> ys     <Plug>Ysurround
-    nmap <buffer> yS     <Plug>Ysurround$
-    nmap <buffer> yss    <Plug>Yssurround
-    nmap <buffer> ygs    <Plug>Ygsurround
-    nmap <buffer> ygS    <Plug>Ygsurround$
-    nmap <buffer> ygss   <Plug>Ygssurround
-    nmap <buffer> ygsgs  <Plug>Ygssurround
-    xmap <buffer> s      <Plug>Vsurround
-    xmap <buffer> S      <Plug>VSurround
-    xmap <buffer> gs     <Plug>Vgsurround
-    xmap <buffer> gS     <Plug>VgSurround
-    imap <buffer> <C-S>  <Plug>Isurround
-    imap <buffer> <C-G>s <Plug>Isurround
-    imap <buffer> <C-G>S <Plug>ISurround
-  endif
-endfunction
-"}}}
-
 
 " accelerated-jk "{{{
 if neobundle#is_installed('accelerated-jk')
