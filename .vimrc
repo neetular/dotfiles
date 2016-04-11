@@ -884,6 +884,7 @@ nnoremap <expr><silent> [unite]l
 
 
 " <C-t>: Tab pages
+nnoremap <silent> <C-t>       :<C-u>Unite tab -start-insert<CR>
 nmap <silent> T <C-t>
 
 nnoremap <silent> [Space]b
