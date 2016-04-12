@@ -36,8 +36,9 @@ highlight CursorIM guifg=bg guibg=#c951ab
 
 highlight Pmenu ctermbg=8 guibg=#000000 guifg=#288ecc
 highlight PmenuSel ctermbg=1 guibg=#40b98b guifg=#000000
-highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
-
+highlight PmenuSbar ctermbg=0 guibg=#404040
+highlight PmenuThumb ctermbg=0 guibg=#40b98b
+" 
 highlight Search guifg=NONE guibg=#07678b
 
 highlight CursorLine NONE

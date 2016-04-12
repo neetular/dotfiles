@@ -238,7 +238,7 @@ call neobundle#config('neocomplete.vim', {
 
 NeoBundle 'kana/vim-textobj-function' " Vim plugin: Text objects for functions
 NeoBundle 'thinca/vim-textobj-function-javascript' " Text objects for functions in javascript.
-
+NeoBundle 'Shougo/context_filetype.vim' " Context filetype library for Vim script
 
 
 NeoBundle 'simoleone/vim-github-markdown' " Github-flavored markdown syntax highlighting for vim
@@ -667,7 +667,6 @@ let g:neocomplete#enable_at_startup = 1
 
 let bundle = neobundle#get('neocomplete.vim')
 function! bundle.hooks.on_source(bundle)
-  "from neocomplcache >>>
   " Use smartcase.
   let g:neocomplete#enable_smart_case = 1
 
@@ -684,45 +683,14 @@ function! bundle.hooks.on_source(bundle)
 
   let g:neocomplete#enable_cursor_hold_i = 0
   let g:neocomplete#cursor_hold_i_time = 100
-  let g:neocomplete#enable_insert_char_pre = 0
-  let g:neocomplete#enable_prefetch = 1
   let g:neocomplete#skip_auto_completion_time = '0.6'
 
   " For auto select.
-  ""let g:neocomplete#enable_complete_select = 1
   let g:neocomplete#enable_auto_select = 0
   let g:neocomplete#enable_refresh_always = 0
-  ""if g:neocomplete#enable_complete_select
-  ""  set completeopt-=noselect
-  ""  set completeopt+=noinsert
-  ""endif
 
   let g:neocomplete#enable_auto_delimiter = 1
-  let g:neocomplete#disable_auto_select_buffer_name_pattern = '\[Command Line\]'
   let g:neocomplete#max_list = 100
-  let g:neocomplete#force_overwrite_completefunc = 1
-  if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
-  endif
-  if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-  endif
-
-  " For clang_complete.
-  let g:neocomplete#force_overwrite_completefunc = 1
-  let g:neocomplete#force_omni_input_patterns.c =
-        \ '[^.[:digit:] *\t]\%(\.\|->\)'
-  let g:neocomplete#force_omni_input_patterns.cpp =
-        \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-  let g:clang_complete_auto = 0
-  let g:clang_auto_select = 0
-  let g:clang_use_library   = 1
-
-  " For jedi-vim.
-  let g:jedi#auto_initialization = 1
-  let g:jedi#popup_on_dot = 0
-  let g:jedi#rename_command = '<leader>R'
-  let g:neocomplete#force_omni_input_patterns.python = '[^. \t]\.\w*'
 
   " Define dictionary.
   let s:neco_dicts_dir = $HOME . '/dicts'
@@ -732,32 +700,14 @@ function! bundle.hooks.on_source(bundle)
         \ 'text' : s:neco_dicts_dir . '/text.dict'
         \ }
 
-  let g:neocomplete#sources#omni#functions = {
-        \ 'cs' : 'cs#complete',
-        \ }
-
-  let g:neocomplete#enable_auto_close_preview = 0
-
-  " Define keyword pattern.
-  if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-  endif
-  let g:neocomplete#keyword_patterns._ = '\h\w*'
-  "let g:neocomplete#keyword_patterns['default'] = '[0-9a-zA-Z:#_]\+'
-  let g:neocomplete#keyword_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
-  if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
-  endif
-  let g:neocomplete#sources#omni#input_patterns.php = '[^. *\t]\.\w*\|\h\w*::'
-  let g:neocomplete#sources#omni#input_patterns.mail = '^\s*\w\+'
-  let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
   let g:neocomplete#sources#buffer#cache_limit_size = 500000
 
-  if !exists('g:neocomplete#same_filetypes')
-    let  g:neocomplete#same_filetypes = {}
+  " context_filetype
+  if !exists('g:context_filetype#same_filetypes')
+    let g:context_filetype#same_filetypes = {}
   endif
-  let g:neocomplete#same_filetypes._ = '_' " Q: I want to complete from all buffers.
+  " In default, completes from all buffers.
+  let g:context_filetype#same_filetypes._ = '_'
 
   let g:neocomplete#sources#vim#complete_functions = {
         \ 'Unite' : 'unite#complete_source',
@@ -773,15 +723,6 @@ function! bundle.hooks.on_source(bundle)
         \ 'Vinarise' : 'vinarise#complete',
         \}
 
-  " Change default matcher.
-  ""  call neocomplete#custom#source('_', 'matchers',
-  ""        \ ['matcher_head'])
-
-  if !exists('g:neocomplete#text_mode_filetypes')
-    let g:neocomplete#text_mode_filetypes = {}
-  endif
-  let g:neocomplete#text_mode_filetypes.gitcommit = 0
-
   " mappings."{{{
   " <C-f>, <C-b>: page move.
   inoremap <expr><C-f>  pumvisible() ? "\<PageDown>" : "\<Right>"
@@ -791,53 +732,16 @@ function! bundle.hooks.on_source(bundle)
   inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
   inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 
-  " <C-n>: neocomplete.
-  inoremap <expr><C-n>  pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>\<Down>"
-  " <C-p>: keyword completion.
-  inoremap <expr><C-p>  pumvisible() ? "\<C-p>" : "\<C-p>\<C-n>"
-
   inoremap <expr>'  pumvisible() ? neocomplete#close_popup() : "'"
 
   imap <C-s>  <Plug>(neosnippet_start_unite_snippet)
 
-  inoremap <expr><C-x><C-f>
-        \ neocomplete#start_manual_complete('file')
-
-  inoremap <expr><C-g>     neocomplete#undo_completion()
   inoremap <expr><C-l>     neocomplete#complete_common_string()
 
-  " ↓改行で日本語入力解除される副作用があるのでコメントアウト
-  "  " <CR>: close popup and save indent.
-  "  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-  "  function! s:my_cr_function()
-  "    return neocomplete#smart_close_popup() . "\<CR>"
-  "  endfunction
-
-  " <TAB>: completion.
-"  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
-"        \ <SID>check_back_space() ? "\<TAB>" :
-"        \ neocomplete#start_manual_complete()
-
-  " VimでNeoSnippetを活用してRailsでスニペットファイルを細かく切り替える - Qiita
-  " http://qiita.com/muran001/items/4a8ffafb9c6564313893
-  " neocomplete.vim公式どおり
-"  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-  function! s:check_back_space() "{{{
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-  endfunction"}}}
   " <S-TAB>: completion back.
   inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
-
-  " For cursor moving in insert mode(Not recommended)
-  inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
-  inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-  inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
-  inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
   "}}}
 
-  "<<< from neocomplcache
 endfunction
 "}}}
 
@@ -1030,7 +934,6 @@ function! bundle.hooks.on_source(bundle)
     nmap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
     imap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
 
-    " <C-l>: manual neocomplcache completion.
     "inoremap <buffer> <C-l>  <C-x><C-u><C-p><Down>
     inoremap <silent> <buffer> <expr> <C-f> unite#do_action('vimfiler')
     nnoremap <silent> <buffer> <expr> <C-f> unite#do_action('vimfiler')
