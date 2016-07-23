@@ -101,7 +101,14 @@ NeoBundle 'Shougo/vimproc', {
       \ }
 
 
-NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'haya14busa/vim-migemo' " Vim Plugin for C/Migemo
+NeoBundle 'easymotion/vim-easymotion' " Vim motions on speed!
+"NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'haya14busa/incsearch.vim' " :flashlight: Improved incremental searching for Vim
+NeoBundle 'haya14busa/incsearch-easymotion.vim'
+NeoBundle 'haya14busa/incsearch-fuzzy.vim'
+NeoBundle 'haya14busa/incsearch-migemo.vim'
+
 NeoBundle 'tsukkee/unite-tag'
 
 NeoBundle 'Shougo/unite-outline', '', 'default'
@@ -150,7 +157,7 @@ NeoBundle 'rhysd/clever-f.vim.git'
 
 " colorscheme {{{
 NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle 'altercation/solarized'
+NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'vim-scripts/newspaper.vim'
 NeoBundle 'nanotech/jellybeans.vim'
 NeoBundle 'w0ng/vim-hybrid'
@@ -268,6 +275,28 @@ NeoBundle 'kannokanno/previm'
 NeoBundle 'farseer90718/vim-taskwarrior'
 
 NeoBundle 'justinmk/vim-dirvish'
+
+NeoBundle 'cohama/agit.vim'
+
+NeoBundle 'tpope/vim-repeat'
+
+NeoBundle 'yuratomo/w3m.vim' " w3m plugin for vim
+NeoBundle 'ringogirl/unite-w3m'
+
+NeoBundleLazy 'OmniSharp/omnisharp-vim', {
+      \   'autoload': { 'filetypes': [ 'cs', 'csi', 'csx' ] },
+      \   'build': {
+      \     'windows' : 'msbuild server/OmniSharp.sln',
+      \     'mac': 'xbuild server/OmniSharp.sln',
+      \     'unix': 'xbuild server/OmniSharp.sln',
+      \   },
+      \ }
+NeoBundle 'tpope/vim-dispatch' " dispatch.vim: asynchronous build and test dispatcher
+
+NeoBundle 'majutsushi/tagbar' " Vim plugin that displays tags in a window, ordered by scope
+
+NeoBundle 'xolox/vim-misc' " Miscellaneous auto-load Vim scripts
+NeoBundle 'xolox/vim-session' " Extended session management for Vim (:mksession on steroids)
 
 " <next NeoBundle here>
 " NeoBundle ''
@@ -541,13 +570,15 @@ set showcmd " コマンドをステータス行に表示
 " 補完関連
 set completeopt=menuone
 set complete=.,w,b,t
-set pumheight=20
+set pumheight=7
+"set pumheight=20
 set showfulltag
 
 " GUI固有ではない画面表示の設定:
 "
 " 行番号を非表示 (number:表示)
 set number
+set relativenumber
 " ルーラーを表示 (noruler:非表示)
 set ruler
 " 長い行を折り返して表示 (nowrap:折り返さない)
@@ -560,8 +591,28 @@ set cmdheight=2
 set title
 
 if !exists('g:colors_name')  " Don't override colorscheme on reloading.
-  colorscheme desert
+  colorscheme luna-term
+  "colorscheme desert
 endif
+
+"highlight Cursor gui=bold guifg=#0c1efe guibg=#dae9e6
+
+"highlight CursorIM guifg=bg guibg=#c951ab
+
+highlight Pmenu ctermbg=8
+highlight PmenuSel ctermbg=1
+highlight PmenuSbar ctermbg=0
+highlight PmenuThumb ctermbg=0
+" 
+"highlight Search guifg=NONE guibg=#07678b
+
+highlight CursorLine NONE
+highlight CursorLine cterm=underline
+highlight CursorLineNr cterm=bold
+highlight CursorColumn NONE
+highlight CursorColumn ctermbg=0
+
+
 
 " ステータスライン
 let &statusline = ''
@@ -591,6 +642,10 @@ endfunction"}}}
 
 function! s:fixed_length_cwd()  "{{{
   return printf('%-32s', s:good_length_cwd())
+endfunction"}}}
+
+function! s:tabline_datetime()  "{{{
+  return strftime('%Y/%m/%d(%a)')
 endfunction"}}}
 
 " lightline.vim 有効なので今は使ってない
@@ -673,7 +728,8 @@ function! bundle.hooks.on_source(bundle)
   " Use fuzzy completion.
   let g:neocomplete#enable_fuzzy_completion = 1
   " Set minimum syntax keyword length.
-  let g:neocomplete#sources#syntax#min_keyword_length = 3
+  let g:neocomplete#sources#syntax#min_keyword_length = 2
+  "let g:neocomplete#sources#syntax#min_keyword_length = 3
   " Set auto completion length.
   let g:neocomplete#auto_completion_start_length = 2
   " Set manual completion length.
@@ -722,6 +778,12 @@ function! bundle.hooks.on_source(bundle)
         \ 'Ref' : 'ref#complete',
         \ 'Vinarise' : 'vinarise#complete',
         \}
+
+  " for C#
+  if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+  endif
+  let g:neocomplete#sources#omni#input_patterns.cs = '.*[^=\);]'
 
   " mappings."{{{
   " <C-f>, <C-b>: page move.
@@ -857,15 +919,17 @@ let g:unite_source_menu_menus.ff.command_candidates = {
 let g:unite_source_menu_menus.unite = {
       \     'description' : 'Start unite sources',
       \ }
-let g:unite_source_menu_menus.unite.command_candidates = {
-      \       'history'    : 'Unite history/command',
-      \       'quickfix'   : 'Unite qf -no-quit',
-      \       'resume'     : 'Unite -buffer-name=resume resume',
-      \       'directory'  : 'Unite -buffer-name=files '.
-      \             '-default-action=lcd directory_mru',
-      \       'mapping'    : 'Unite mapping',
-      \       'message'    : 'Unite output:message',
-      \     }
+let g:unite_source_menu_menus.unite.command_candidates = [
+      \       ['neobundle/update'    , 'Unite neobundle/update'],
+      \       ['neobundle/search'    , 'Unite neobundle/search'],
+      \       ['history'    , 'Unite history/command'],
+      \       ['quickfix'   , 'Unite qf -no-quit'],
+      \       ['resume'     , 'Unite -buffer-name=resume resume'],
+      \       ['directory'  , 'Unite -buffer-name=files '.
+      \             '-default-action=lcd directory_mru'],
+      \       ['mapping'    , 'Unite mapping'],
+      \       ['message'    , 'Unite output:message'],
+      \     ]
 "nnoremap <silent> :u :<C-u>Unite menu:unite -resume<CR>
 
 
@@ -1011,7 +1075,8 @@ function! s:MyUniteWithCurrentDir(...)
   if a:0
     let args .= join(a:000, "\\ ")
   endif
-  execute "Unite -input=" . getcwd() . '/' . args . " -direction=topleft -buffer-name=files args file_mru buffer file"
+  execute "Unite -input=" . tolower(getcwd()) . '/' . args . " -here -direction=dynamicbelow -prompt-direction=\"below\" -buffer-name=files args file_mru buffer file"
+  "execute "Unite -input=" . getcwd() . '/' . args . " -direction=topleft -buffer-name=files args file_mru buffer file"
 endfunction
 
 command! -nargs=* MyVim
@@ -1112,7 +1177,8 @@ function! bundle.hooks.on_source(bundle)
     "imap <buffer><C-g>  <Plug>(vimshell_history_neocomplete)
 
     " Auto jump.
-    call vimshell#set_alias('j', ':Unite -direction=topleft -buffer-name=files
+    "call vimshell#set_alias('j', ':Unite -direction=topleft -buffer-name=files
+    call vimshell#set_alias('j', ':Unite -here -direction=dynamicbelow -prompt-direction="below" -buffer-name=files
           \ -default-action=lcd -input=$$args directory_mru')
           "\ -default-action=lcd -no-split -input=$$args directory_mru')
 
@@ -1209,9 +1275,47 @@ unlet bundle
 let g:EasyMotion_leader_key = ','
 let g:EasyMotion_do_shade = 1
 "let g:EasyMotion_keys = 'asdfghjkl'
-let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz'
+"let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz'
 let g:EasyMotion_grouping = 1 "2
 
+"nmap f <Plug>(easymotion-s2)
+"nmap f <Plug>(easymotion-s)
+
+" =======================================
+" Find Motions
+" =======================================
+" Jump to anywhere you want by just `4` or `3` key strokes without thinking!
+" `s{char}{char}{target}`
+"nmap f <Plug>(easymotion-s2)
+"xmap f <Plug>(easymotion-s2)
+"omap f <Plug>(easymotion-s2)
+
+" s{char}{char} to move to {char}{char}
+nmap F <Plug>(easymotion-overwin-f2)
+vmap F <Plug>(easymotion-bd-f2)
+"nmap f <Plug>(easymotion-overwin-f2)
+"vmap f <Plug>(easymotion-bd-f2)
+
+
+" Turn on case sensitive feature
+let g:EasyMotion_smartcase = 1
+
+" keep cursor column with `JK` motions
+let g:EasyMotion_startofline = 0
+
+" General Configuration
+" =======================================
+let g:EasyMotion_keys = 'KDLS;HGURIEOWPQMV,C.X/ZAFJ'
+"let g:EasyMotion_keys = 'KDLS;AFJ'
+"let g:EasyMotion_keys = 'KDLS;AHGURIEOWPQMV,C.X/ZFJ'
+"let g:EasyMotion_keys = ';HKLYUIOPNM,QWERTASDGZXCVBJF'
+" Show target key with upper case to improve readability
+let g:EasyMotion_use_upper = 1
+" Jump to first match with enter & space
+let g:EasyMotion_enter_jump_first = 1
+let g:EasyMotion_space_jump_first = 1
+
+let g:EasyMotion_use_migemo = 1
 
 "}}}
 
@@ -1349,9 +1453,10 @@ nnoremap [Space]gl :<C-u>UniteVersions log:%<CR>
 " clever-f.vim "{{{
 let g:clever_f_not_overwrites_standard_mappings = 1
 map f  <Plug>(clever-f-f)
-map F  <Plug>(clever-f-F)
+"map F  <Plug>(clever-f-F) "easymotionのため一時コメントアウトテスト
 " nmap t  <Plug>(clever-f-t)
 " nmap T  <Plug>(clever-f-T)
+let g:clever_f_use_migemo = 0 " 重い
 
 "}}}
 
@@ -1363,18 +1468,15 @@ smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 "xmap <C-k>     <Plug>(neosnippet_expand_target)
 "xmap <C-l>     <Plug>(neosnippet_start_unite_snippet_target)
 
-imap <expr><TAB> neosnippet#jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
+imap <expr><TAB> pumvisible() ? "\<C-n>"
+\: neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)"
 \: "\<TAB>"
 
-
-
-" For snippet_complete marker.
+" For conceal markers.
 if has('conceal')
-  set conceallevel=2 concealcursor=i
+  set conceallevel=2 concealcursor=niv
 endif
 
 " Enable snipMate compatibility feature.
@@ -1422,7 +1524,7 @@ xmap [Space]m <Plug>(quickhl-manual-this)
 nmap [Space]M <Plug>(quickhl-manual-reset)
 xmap [Space]M <Plug>(quickhl-manual-reset)
 nmap [Space]j <Plug>(quickhl-cword-toggle)
-nmap [Space]] <Plug>(quickhl-tag-toggle)
+"nmap [Space]] <Plug>(quickhl-tag-toggle)
 "map H <Plug>(operator-quickhl-manual-this-motion)
 
 let g:quickhl_manual_enable_at_startup = 1
@@ -1459,7 +1561,7 @@ let g:lightline = {
       \ 'colorscheme': 'default',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'currenttag' ] ]
       \ },
       \ 'component_function': {
       \   'modified': 'MyModified',
@@ -1470,6 +1572,7 @@ let g:lightline = {
       \   'filetype': 'MyFiletype',
       \   'fileencoding': 'MyFileencoding',
       \   'mode': 'MyMode',
+      \   'currenttag': 'MyCurrentTag',
       \ }
       \ }
 
@@ -1513,15 +1616,19 @@ function! MyMode()
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
+function! MyCurrentTag()
+  return tagbar#currenttag('%s', '')
+endfunction
+
 let g:lightline.component_expand = {
       \ 'my_tabline_left': s:SID_PREFIX() . 'fixed_length_cwd',
-      \ 'tabs': 'lightline#tabs' }
+      \ 'tabs': 'lightline#tabs',
+      \ 'my_tabline_right': s:SID_PREFIX() . 'tabline_datetime'}
 let g:lightline.component_type = {
-    \ 'my_tabline_left': 'raw',
-    \ 'tabs': 'tabsel', }
+    \ 'tabs': 'tabsel' }
 let g:lightline.tabline = {
       \ 'left': [ [ 'my_tabline_left' ], [ 'tabs' ] ],
-      \ 'right': [ [ 'close' ] ] }
+      \ 'right': [ [ 'my_tabline_right' ] ] }
 
 "}}}
 
@@ -1560,7 +1667,8 @@ nnoremap <silent> KO  :<C-u>Unite outline -start-insert -resume<CR>
 nnoremap <silent> KJ  :<C-u>Unite -buffer-name=files -start-insert -default-action=lcd directory_mru<CR>
 nnoremap <silent> KM  :<C-u>Unite menu<CR>
 nnoremap KS  :<C-u>Unite source<CR>
-nnoremap KU  q:Unite<Space>
+"nnoremap KU  q:Unite<Space>
+nnoremap <silent> KU  :<C-u>Unite menu:unite<CR>
 
 nnoremap <silent> KB  :<C-u>Unite -buffer-name=files bookmark<CR>
 
@@ -1581,6 +1689,8 @@ nmap :  <Plug>(vimshell_switch)
 
 
 nnoremap <silent> KT  :<C-u>Unite tag  -buffer-name=tag -start-insert<CR>
+
+nnoremap <silent> K.  :<C-u>UniteResume<CR>
 
 " }}}
 
@@ -2089,7 +2199,8 @@ let t:cwd = getcwd()
 
 " dotnet-complete.git
 augroup MyAutoCmd
-  autocmd BufNewFile,BufRead *.cs      setl omnifunc=cs#complete
+  autocmd BufNewFile,BufRead *.cs      setl omnifunc=OmniSharp#Complete
+  "autocmd BufNewFile,BufRead *.cs      setl omnifunc=cs#complete
   autocmd BufNewFile,BufRead *.cs      setl bexpr=cs#balloon()
   autocmd BufNewFile,BufRead *.cs      setl ballooneval
 augroup END
@@ -2271,5 +2382,105 @@ let g:task_info_size=36
 let g:SimplenoteNoteFormat="%D [%F|%T] %N%>EOL"
 let g:SimplenoteStrftime="%Y/%m/%d(%a) %T"
 
+nmap [Space]d <Plug>(dirvish_up)
+
+augroup my_dirvish_events
+  autocmd!
+  " Map t to "open in new tab".
+  autocmd FileType dirvish
+    \  nnoremap <buffer><silent> t :call dirvish#open('tabedit', 0)<CR>
+    \ |xnoremap <buffer><silent> t :call dirvish#open('tabedit', 0)<CR>
+    \ |nnoremap <buffer><silent> l :call dirvish#open('edit', 0)<CR>
+    \ |nmap <buffer> h <Plug>(dirvish_up)
+
+  " Enable :Gstatus and friends.
+  autocmd FileType dirvish call fugitive#detect(@%)
+
+  " Map CTRL-R to reload the Dirvish buffer.
+  autocmd FileType dirvish nnoremap <buffer> <C-R> :<C-U>Dirvish %<CR>
+
+  " Map `gh` to hide dot-prefixed files.
+  " To "toggle" this, just press `R` to reload.
+  autocmd FileType dirvish nnoremap <buffer>
+    \ gh :keeppatterns g@\v/\.[^\/]+/?$@d<cr>
+augroup END
+
+
+imap <C-d> <Del>
+
+
+
+" You can use other keymappings like <C-l> instead of <CR> if you want to
+" use these mappings as default search and somtimes want to move cursor with
+" EasyMotion.
+function! s:incsearch_config(...) abort
+  return incsearch#util#deepextend(deepcopy({
+  \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+  \   'keymap': {
+  \     "\<C-f>": '<Over>(easymotion)'
+  \   },
+  \   'is_expr': 0
+  \ }), get(a:, 1, {}))
+endfunction
+
+noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
+noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
+noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
+
+" 重いかな。様子見て、使わなそうならやめよう
+function! s:config_migemo(...) abort
+  return extend(copy({
+  \   'converters': [
+  \     incsearch#config#migemo#converter(),
+  \   ],
+  \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+  \   'keymap': {"\<C-f>": '<Over>(easymotion)'},
+  \   'is_expr': 0,
+  \ }), get(a:, 1, {}))
+endfunction
+
+noremap <silent><expr> m/ incsearch#go(<SID>config_migemo())
+noremap <silent><expr> m? incsearch#go(<SID>config_migemo({'command': '?'}))
+noremap <silent><expr> mg/ incsearch#go(<SID>config_migemo({'is_stay': 1}))
+
+" function! s:config_fuzzyall(...) abort
+"   return extend(copy({
+"   \   'converters': [
+"   \     incsearch#config#fuzzy#converter(),
+"   \     incsearch#config#fuzzyspell#converter()
+"   \   ],
+"   \ }), get(a:, 1, {}))
+" endfunction
+" 
+" noremap <silent><expr> z/ incsearch#go(<SID>config_fuzzyall())
+" noremap <silent><expr> z? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
+" noremap <silent><expr> zg/ incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
+" 
+" " incsearch.vim x fuzzy x vim-easymotion
+" 
+" function! s:config_easyfuzzymotion(...) abort
+"   return extend(copy({
+"   \   'converters': [incsearch#config#fuzzy#converter()],
+"   \   'modules': [incsearch#config#easymotion#module()],
+"   \   'keymap': {"\<CR>": '<Over>(easymotion)'},
+"   \   'is_expr': 0,
+"   \   'is_stay': 1
+"   \ }), get(a:, 1, {}))
+" endfunction
+" 
+" noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
+
+let g:w3m#external_browser = 'open'
+"let g:w3m#external_browser = 'open -a /Applications/MultiBrowser.app'
+
+" 日本語入力の検索でincsearchがうまく動かないので
+nnoremap z/ /
+
+let g:session_persist_colors = 0
+
+nnoremap [Space]<Space>[ A<Space>{{{<Esc>
+nnoremap [Space][        A{{{<Esc>
+nnoremap [Space]<Space>] A<Space>}}}<Esc>
+nnoremap [Space]]        A}}}<Esc>
 "
 " vim: foldmethod=marker

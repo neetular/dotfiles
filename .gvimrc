@@ -15,7 +15,9 @@ colorscheme base16-summerfruit
 " highlight Normal guibg=#005050
 " highlight Folded guibg=#004040
 
-set guifont=Ricty\ Discord:h13
+set guifont=MyricaMM:h16
+"set guifont=Nyashi:h16
+"set guifont=Ricty\ Discord:h13
 "set guifont=Ricty\ Discord:h17
 
 set guioptions&
@@ -34,10 +36,10 @@ highlight Cursor gui=bold guifg=#0c1efe guibg=#dae9e6
 
 highlight CursorIM guifg=bg guibg=#c951ab
 
-highlight Pmenu ctermbg=8 guibg=#000000 guifg=#288ecc
-highlight PmenuSel ctermbg=1 guibg=#40b98b guifg=#000000
+highlight Pmenu ctermbg=8 guibg=#92CBDD guifg=#1C180E
+highlight PmenuSel ctermbg=1 guibg=#FC881B guifg=#000000
 highlight PmenuSbar ctermbg=0 guibg=#404040
-highlight PmenuThumb ctermbg=0 guibg=#40b98b
+highlight PmenuThumb ctermbg=0 guibg=#FC881B
 " 
 highlight Search guifg=NONE guibg=#07678b
 
@@ -95,7 +97,7 @@ if has("gui_macvim")
   macm Window.Minimize\ All	key=<nop>
   macm Window.Zoom		key=<nop>
   macm Window.Zoom\ All		key=<nop>
-  macm Window.Toggle\ Full\ Screen\ Mode	key=<nop>
+"  macm Window.Toggle\ Full\ Screen\ Mode	key=<nop>
   macm Window.Select\ Next\ Window		key=<nop>
   macm Window.Select\ Previous\ Window	key=<nop>
   macm Window.Select\ Next\ Tab			key=<nop>
