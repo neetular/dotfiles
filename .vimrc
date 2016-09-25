@@ -234,6 +234,7 @@ NeoBundle 'kana/vim-textobj-indent' " Vim plugin: Text objects for indented bloc
 " operator
 NeoBundle 'kana/vim-operator-user' " Vim plugin: Define your own operator easily
 NeoBundle 'emonkak/vim-operator-comment' " Vim plugin: Operator for comment and uncomment
+NeoBundle 'kana/vim-operator-replace' " Vim plugin: Operator to replace text with register content
 
 NeoBundle 'Shougo/neocomplete.vim'
 call neobundle#config('neocomplete.vim', {
@@ -1320,8 +1321,8 @@ let g:EasyMotion_use_migemo = 1
 "}}}
 
 " fontzoom.vim"{{{
-nmap + <Plug>(fontzoom-larger)
-nmap _ <Plug>(fontzoom-smaller)
+"nmap + <Plug>(fontzoom-larger)
+"nmap _ <Plug>(fontzoom-smaller)
 "}}}
 
 " altercmd.vim{{{
@@ -1439,6 +1440,8 @@ nnoremap [Space]esr :<C-u>EvervimSearchByQuery<SPACE>updated:day-1
 "nnoremap <silent> [Space]eta :<C-u>EvervimSearchByQuery<SPACE>tag:todo -tag:done<CR>
 "let g:evervim_splitoption=''
 
+let g:evervim_usemarkdown=0
+
 "}}}
 
 " vim-versions.git "{{{
@@ -1544,7 +1547,7 @@ let g:quickhl_manual_colors = [
       \ "gui=bold ctermfg=7   ctermbg=56  guibg=#a0b0c0 guifg=black",
       \ ]
 let g:quickhl_manual_keywords = [
-      \ "@waiting",
+      \ "[ ]",
       \ "[.]",
       \ "[@]",
       \ "[!]",
@@ -1633,6 +1636,9 @@ let g:lightline.tabline = {
 "}}}
 
 " vim-operator-comment "{{{
+nmap ,c  <Plug>(operator-comment)
+xmap ,c  <Plug>(operator-comment)
+"map {lhs}  <Plug>(operator-uncomment)
 "}}}
 
 " itchyny/lightline.vim "{{{
@@ -1666,7 +1672,9 @@ nnoremap <silent> KO  :<C-u>Unite outline -start-insert -resume<CR>
 
 nnoremap <silent> KJ  :<C-u>Unite -buffer-name=files -start-insert -default-action=lcd directory_mru<CR>
 nnoremap <silent> KM  :<C-u>Unite menu<CR>
-nnoremap KS  :<C-u>Unite source<CR>
+"nnoremap KS  :<C-u>Unite source<CR>
+nnoremap KS  :<C-u>Unite source -start-insert<CR>
+nnoremap Ks  :<C-u>Unite source -start-insert<CR>
 "nnoremap KU  q:Unite<Space>
 nnoremap <silent> KU  :<C-u>Unite menu:unite<CR>
 
@@ -1917,7 +1925,7 @@ function! s:init_cmdwin()
 
   " Completion.
   inoremap <buffer><expr><TAB>  pumvisible() ?
-        \ "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : "\<C-x>\<C-u>\<C-p>"
+        \ "\<C-n>" : "\<TAB>"
 
   startinsert!
 endfunction
@@ -2482,5 +2490,8 @@ nnoremap [Space]<Space>[ A<Space>{{{<Esc>
 nnoremap [Space][        A{{{<Esc>
 nnoremap [Space]<Space>] A<Space>}}}<Esc>
 nnoremap [Space]]        A}}}<Esc>
+
+map _  <Plug>(operator-replace)
+
 "
 " vim: foldmethod=marker

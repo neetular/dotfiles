@@ -14,9 +14,9 @@ let b:undo_ftplugin .= 'setl modeline<'
 " set indent.
 setlocal shiftwidth=2 softtabstop=2
 " Smart insert tab setting.
-set smarttab
+setlocal smarttab
 " Exchange tab to spaces.
-set expandtab
+setlocal expandtab
 
 setlocal iskeyword+=:,#
 
