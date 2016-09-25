@@ -82,7 +82,7 @@ if has("gui_macvim")
   " macm Edit.Font.Show\ Fonts			action=orderFrontFontPanel:
   macm Edit.Font.Bigger				key=<nop>
   macm Edit.Font.Smaller			key=<nop>
-  macm Edit.Special\ Characters\.\.\.		key=<nop>
+  " macm Edit.Special\ Characters\.\.\.		key=<nop>
 
   macm Tools.Spelling.To\ Next\ error<Tab>]s	key=<nop>
   macm Tools.Spelling.Suggest\ Corrections<Tab>z=   key=<nop>

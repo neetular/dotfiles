@@ -813,42 +813,52 @@ endfunction
 " The prefix key.
 nnoremap    [unite]   <Nop>
 xnoremap    [unite]   <Nop>
-nmap    U [unite]
-xmap    U [unite]
+nmap    K [unite]
+xmap    K [unite]
 
-nnoremap <silent> [unite]f  :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir -buffer-name=files buffer file_mru bookmark file<CR>
+nnoremap <silent> [unite]A  :<C-u>Unite -buffer-name=files args<CR>
+nnoremap <silent> [unite]K  :<C-u>MyUniteWithCurrentDir<CR>
+nnoremap <silent> [unite]k  :<C-u>Unite               -buffer-name=files args file_mru buffer file<CR>
 
-nnoremap <silent> [unite]b  :<C-u>Unite -buffer-name=files -prompt=%\  buffer file_mru bookmark file<CR>
+nnoremap <silent> [unite]R  :<C-u>Unite -buffer-name=files file_rec/async buffer file<CR>
+nnoremap <silent> [unite]F  :<C-u>Unite -buffer-name=files file file/new<CR>
 
-nnoremap <silent> [unite]r  :<C-u>UniteResume<CR>
-nnoremap <silent> [unite]R  :<C-u>Unite resume<CR>
-nnoremap <silent> [unite]o  :<C-u>Unite outline<CR>
+nnoremap <silent> [unite]O  :<C-u>Unite outline -start-insert -resume<CR>
 
-nnoremap <silent> [unite]d  :<C-u>Unite -buffer-name=files -default-action=lcd directory_mru<CR>
+nnoremap <silent> [unite]J  :<C-u>Unite -buffer-name=files -start-insert -default-action=lcd directory_mru<CR>
+nnoremap <silent> [unite]M  :<C-u>Unite menu<CR>
 
-nnoremap <silent> [unite]t  :<C-u>Unite tag  -buffer-name=tag<CR>
-nnoremap <silent> [unite]q  :<C-u>Unite qf   -buffer-name=QuickFix<CR>
+nnoremap <silent> U  :<C-u>Unite source -start-insert<CR>
+nmap [unite]S  U
+nmap [unite]s  U
 
-nnoremap <silent> [unite]k  :<C-u>Unite -buffer-name=files bookmark buffer file_mru file<CR>
-nnoremap <silent> [unite]j  :<C-u>Unite -buffer-name=files buffer file_mru<CR>
-nnoremap <silent> [unite]h  :<C-u>Unite history/command<CR>
+nnoremap <silent> [unite]U  :<C-u>Unite menu:unite<CR>
 
-nnoremap <silent> [unite]m  :<C-u>Unite menu<CR>
+nnoremap <silent> [unite]B  :<C-u>Unite -buffer-name=buffers buffer<CR>
+nnoremap <silent> [unite]b  :<C-u>Unite -buffer-name=bookmarks bookmark<CR>
 
-nnoremap [unite]s  :<C-u>Unite source<CR>
-nnoremap [unite]S  :<C-u>Unite source -start-insert<CR>
+xnoremap <silent> [unite]"
+      \ d:<C-u>Unite -buffer-name=register history/yank register<CR>
+nnoremap <silent> [unite]"
+      \ :<C-u>Unite -buffer-name=register history/yank register<CR>
 
-nnoremap [unite]u  q:Unite<Space>
+nnoremap <silent> [unite]:
+      \ :<C-u>Unite -buffer-name=commands -start-insert history/command<CR>
 
-nnoremap <silent> [unite]g
-      \ :<C-u>Unite grep -buffer-name=search -auto-preview -no-quit -resume<CR>
-nnoremap <silent> [Window]G
-      \ :<C-u>Unite grep -buffer-name=search -auto-preview -no-quit -resume<CR>
+" -resume なし
+nnoremap <silent> [unite]G
+      \ :<C-u>Unite grep -buffer-name=search -auto-preview -no-quit<CR>
 
-nnoremap <expr><silent> [unite]l
-      \ ":\<C-u>Unite -buffer-name=line -input=" . @/ . " -no-start-insert line\<CR>"
+nnoremap <silent> [unite]T  :<C-u>Unite tag  -buffer-name=tag -start-insert<CR>
 
+nnoremap <silent> [unite].  :<C-u>UniteResume<CR>
+
+
+" Search.
+nnoremap <silent> [unite]l
+      \ :<C-u>Unite -buffer-name=search -no-split -start-insert line<CR>
+nnoremap <expr><silent> [unite]L
+      \ ":\<C-u>Unite -buffer-name=search -input=" . @/ . " -auto-highlight -no-start-insert line\<CR>"
 
 " <C-t>: Tab pages
 nnoremap <silent> <C-t>       :<C-u>Unite tab -start-insert<CR>
@@ -856,21 +866,6 @@ nmap <silent> T <C-t>
 
 nnoremap <silent> [Space]b
       \ :<C-u>UniteBookmarkAdd<CR>
-
-" Search.
-nnoremap <silent> Kl
-      \ :<C-u>Unite -buffer-name=search -no-split -start-insert line<CR>
-nnoremap <expr><silent> KL
-      \ ":\<C-u>Unite -buffer-name=search -input=" . @/ . " -auto-highlight -no-start-insert line\<CR>"
-
-cnoremap <expr><silent><C-g>        (getcmdtype() == '/') ?
-      \ "\<ESC>:Unite -buffer-name=search -no-split line -input=".getcmdline()."\<CR>" : "\<C-g>"
-
-function! s:smart_search_expr(expr1, expr2)
-  return line('$') > 5000 ?  a:expr1 : a:expr2
-endfunction
-
-let g:unite_source_history_yank_enable = 1
 
 " For unite-menu.
 let g:unite_source_menu_menus = {}
@@ -1076,7 +1071,8 @@ function! s:MyUniteWithCurrentDir(...)
   if a:0
     let args .= join(a:000, "\\ ")
   endif
-  execute "Unite -input=" . tolower(getcwd()) . '/' . args . " -here -direction=dynamicbelow -prompt-direction=\"below\" -buffer-name=files args file_mru buffer file"
+  execute "Unite -input=" . tolower(getcwd()) . '/' . args . " -buffer-name=files args file_mru buffer file"
+  "execute "Unite -input=" . tolower(getcwd()) . '/' . args . " -here -direction=dynamicbelow -prompt-direction=\"below\" -buffer-name=files args file_mru buffer file"
   "execute "Unite -input=" . getcwd() . '/' . args . " -direction=topleft -buffer-name=files args file_mru buffer file"
 endfunction
 
@@ -1657,48 +1653,10 @@ let g:calendar_google_task = 1
 " Key-mappings: "{{{
 
 " Ordinary " {{{
-nnoremap    K   <Nop>
-xnoremap    K   <Nop>
-nnoremap <silent> KA  :<C-u>Unite -buffer-name=files args<CR>
-"nnoremap <silent> KK  :<C-u>UniteWithCurrentDir -buffer-name=files args file_mru buffer file<CR>
-"nnoremap <expr><silent> KK  ":<C-u>Unite -input=" . getcwd() . "\\ " . " -buffer-name=files args file_mru buffer file\<CR>"
-nnoremap <silent> KK  :<C-u>MyUniteWithCurrentDir<CR>
-nnoremap <silent> Kk  :<C-u>Unite               -buffer-name=files args file_mru buffer file<CR>
-
-nnoremap <silent> KR  :<C-u>Unite -buffer-name=files file_rec/async buffer file<CR>
-nnoremap <silent> KF  :<C-u>Unite -buffer-name=files file file/new<CR>
-
-nnoremap <silent> KO  :<C-u>Unite outline -start-insert -resume<CR>
-
-nnoremap <silent> KJ  :<C-u>Unite -buffer-name=files -start-insert -default-action=lcd directory_mru<CR>
-nnoremap <silent> KM  :<C-u>Unite menu<CR>
-"nnoremap KS  :<C-u>Unite source<CR>
-nnoremap KS  :<C-u>Unite source -start-insert<CR>
-nnoremap Ks  :<C-u>Unite source -start-insert<CR>
-"nnoremap KU  q:Unite<Space>
-nnoremap <silent> KU  :<C-u>Unite menu:unite<CR>
-
-nnoremap <silent> KB  :<C-u>Unite -buffer-name=files bookmark<CR>
-
-xnoremap <silent> K"
-      \ d:<C-u>Unite -buffer-name=register history/yank register<CR>
-nnoremap <silent> K"
-      \ :<C-u>Unite -buffer-name=register history/yank register<CR>
-
-nnoremap <silent> K:
-      \ :<C-u>Unite -buffer-name=commands -start-insert history/command<CR>
-
-" -resume なし
-nnoremap <silent> KG
-      \ :<C-u>Unite grep -buffer-name=search -auto-preview -no-quit<CR>
 
 nnoremap <silent> [Space]h  :<C-u>VimShellBufferDir<CR>
 nmap :  <Plug>(vimshell_switch)
 
-
-nnoremap <silent> KT  :<C-u>Unite tag  -buffer-name=tag -start-insert<CR>
-
-nnoremap <silent> K.  :<C-u>UniteResume<CR>
 
 " }}}
 
@@ -2233,9 +2191,9 @@ command!
       \   map <args> | map! <args> | lmap <args>
 
 
-if argc() == 0
-  autocmd MyAutoCmd VimEnter * VimShell
-endif
+" if argc() == 0
+"   autocmd MyAutoCmd VimEnter * VimShell
+" endif
 
 if s:is_windows
   nnoremap <silent> [unite]U
@@ -2484,6 +2442,7 @@ let g:w3m#external_browser = 'open'
 " 日本語入力の検索でincsearchがうまく動かないので
 nnoremap z/ /
 
+let g:session_autoload = 'no'
 let g:session_persist_colors = 0
 
 nnoremap [Space]<Space>[ A<Space>{{{<Esc>
